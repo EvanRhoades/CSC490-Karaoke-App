@@ -1,0 +1,4 @@
+#Sun Sep 16 19:03:53 EDT 2018
+base.0=C\:\\Users\\Luke\\AndroidStudioProjects\\karaoke\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex
