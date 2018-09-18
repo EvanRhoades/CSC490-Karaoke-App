@@ -1,0 +1,33 @@
+{
+  "name": "karaoke-rest-api",
+  "version": "1.0.0",
+  "description": "RESTful API for Android Karaoke App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvanRhoades/CSC490-Karaoke-App.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "Android",
+    "MongoDB"
+  ],
+  "author": "Michael Ward",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvanRhoades/CSC490-Karaoke-App/issues"
+  },
+  "homepage": "https://github.com/EvanRhoades/CSC490-Karaoke-App#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.15"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
+  }
+}
