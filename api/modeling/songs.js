@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const songSchema = mongoose.Schema({
-    Artist: String,
-    Song: String,
-    Album: String
+    Artist: { type: String, required: true },
+    Song: { type: String, required: true },
+    Album: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Songs', songSchema);
