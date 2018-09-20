@@ -2,15 +2,24 @@ const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
+const mysql = require('mysql');
 
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 
-mongoose.connect('mongodb+srv://wardadmin:'+MongoPW+'@node-rest-karaoke-wunge.mongodb.net/test?retryWrites=true',
-{
-    useNewUrlParser: true
+//mongoose.connect('mongodb+srv://wardadmin:'+MongoPW+'@node-rest-karaoke-wunge.mongodb.net/test?retryWrites=true',
+//{
+//    useNewUrlParser: true
+//});
+
+const connectTo = mysql.createConnection({
+    host: "localhost:3000",
+    user: "wardadmin",
+    password: "KAraoke490"
 });
+
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
