@@ -2,9 +2,15 @@ const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
+
+mongoose.connect('mongodb+srv://wardadmin:'+MongoPW+'@node-rest-karaoke-wunge.mongodb.net/test?retryWrites=true',
+{
+    useNewUrlParser: true
+});
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
