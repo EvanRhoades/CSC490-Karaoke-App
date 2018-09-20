@@ -4,7 +4,8 @@
   "description": "RESTful API for Android Karaoke App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "mongoose": "^5.2.15"
+    "mongoose": "^5.2.15",
+    "nodemon": "^1.18.4"
   },
   "devDependencies": {
     "morgan": "^1.9.1"
