@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+//object for Schema
 const User = require('../modeling/user')
 
+//Handles GET requests
 router.get ('/', (req, res, next) => {
     const user = {
         firstName: req.body.firstName,
@@ -26,6 +28,7 @@ router.get ('/', (req, res, next) => {
     });
 });
 
+//Handles POST request
 router.post ('/', (req, res, next) => {
     const user = new User ({
         firstName: req.body.firstName,
@@ -42,6 +45,7 @@ router.post ('/', (req, res, next) => {
     });
 });
 
+//Handle GET with a sub-URL
 router.get ('/:name', (req, res, next) =>{
     const user = {
         firstName: req.body.firstName,
