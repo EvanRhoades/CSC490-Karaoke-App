@@ -10,16 +10,10 @@ const mysql = require('mysql');
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 
-//Possibly using mongoose
-//mongoose.connect('mongodb+srv://wardadmin:'+MongoPW+'@node-rest-karaoke-wunge.mongodb.net/test?retryWrites=true',
-//{
-//    useNewUrlParser: true
-//});
-
-//Investigating effeciency of mySQL vs Mongo
+/*
 const connectTo = mysql.createConnection({
-    host: "localhost:3000",
-    user: "wardadmin",
+   host: "localhost:3000",
+   user: "wardadmin",
     password: "Karaoke490"
 });
 
@@ -39,7 +33,7 @@ app.use((req, res, next) => {
         return res.status(200).json({});
     };
 })
-
+*/
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
 

@@ -28,10 +28,11 @@
     "express": "^4.16.3",
     "mongoose": "^5.2.16",
     "mysql": "^2.16.0",
-    "nodemon": "^1.18.4",
+    "morgan": "^1.9.0",
     "sequelize": "^4.39.0"
   },
+
   "devDependencies": {
-    "morgan": "^1.9.1"
+    "nodemon": "^1.12.1"
   }
 }
