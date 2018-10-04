@@ -16,7 +16,7 @@ const connectTo = mysql.createConnection({
    user: "wardadmin",
     password: "Karaoke490"
 });
-
+*/
 
 //Intialize Morgan logger and body-parser for json
 app.use(morgan('dev'));
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
         return res.status(200).json({});
     };
 })
-*/
+
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
 
