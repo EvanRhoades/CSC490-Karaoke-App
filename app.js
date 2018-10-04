@@ -19,11 +19,11 @@ const connectTo = mysql.createConnection({
 */
 
 //Intialize Morgan logger and body-parser for json
-app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+//app.use(morgan('dev'));
+//app.use(bodyParser.urlencoded({extended: true}));
+//app.use(bodyParser.json());
 
-//CORS Handling
+/*/CORS Handling
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Conrol-Allow-Headers",
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
         return res.status(200).json({});
     };
 })
-
+*/
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
 
