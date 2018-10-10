@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 //object for Schema
-const User = require('../modeling/user')
+const User = require('../modeling/users')
 
 //Handles GET requests
 router.get ('/', (req, res, next) => {

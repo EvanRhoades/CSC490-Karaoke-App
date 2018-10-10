@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/EvanRhoades/CSC490-Karaoke-App#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.2.16",

@@ -9,6 +9,7 @@ const mysql = require('mysql');
 //Set Request Route
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
+const memberRoutes = require ('./api/routes/membership');
 
 /*
 const connectTo = mysql.createConnection({
@@ -36,6 +37,7 @@ app.use((req, res, next) => {
 */
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
+app.use ('/membership', memberRoutes);
 
 app.use((req, res, next) => {
     const error = new Error('Not found!');
