@@ -1,6 +1,8 @@
 const Sequelize = require ('sequelize');
 
-const connection = new Sequelize( 'karaokeinstance', process.env.garbageman, process.env.bird);
+const connection = new Sequelize( 'karaokeinstance', process.env.garbageman, process.env.bird,{
+    dialect: 'mysql'
+});
 
 const Song = connection.define('songList', {
 Title: Sequelize.STRING,
