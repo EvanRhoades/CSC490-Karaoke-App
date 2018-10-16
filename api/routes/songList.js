@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../modeling/songs');
 const Sequelize = require('sequelize');
-const connection = new Sequelize( 'karaokeinstance', 'wardadmin', 'Karaoke490');
+const connection = new Sequelize( 'karaokeinstance', process.env.garbageman, process.env.bird);
 
 
 //Handles GET request
