@@ -1,9 +1,11 @@
-const mongoose = require('mongoose');
+const Sequelize = require ('sequelize');
 
-const songSchema = mongoose.Schema({
-    Artist: { type: String, required: true },
-    Song: { type: String, required: true },
-    Album: { type: String, required: true }
+const connection = new Sequelize( 'karaokeinstance', 'wardadmin', 'Karaoke490');
+
+const Song = connection.define('songList', {
+Title: Sequelize.STRING,
+Author: Sequelize.STRING,
+dj_id: Sequelize.INTEGER
 });
 
-module.exports = mongoose.model('Songs', songSchema);
+connection.sync();

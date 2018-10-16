@@ -3,21 +3,16 @@ const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-//const mongoose = require('mongoose');
-const mysql = require('mysql');
+const Sequelize = require('sequelize');
+
+//const connection = new Sequelize( 'karaokeinstance', 'wardadmin', 'Karaoke490');
 
 //Set Request Route
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 const memberRoutes = require ('./api/routes/membership');
 
-/*
-const connectTo = mysql.createConnection({
-   host: "localhost:3000",
-   user: "wardadmin",
-    password: "Karaoke490"
-});
-*/
+
 
 //Intialize Morgan logger and body-parser for json
 //app.use(morgan('dev'));
