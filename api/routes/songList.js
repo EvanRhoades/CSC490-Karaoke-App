@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const Song = require('../modeling/songs');
+//const Song = require('../../models/song');
 const Sequelize = require('sequelize');
 const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.env.bird, {
     host: 'karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com',
@@ -8,14 +8,16 @@ const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.
     dialect: 'mysql'
 });
 
-const Song = connection.define('songList', {
-    Title: Sequelize.STRING,
-    Artist: Sequelize.STRING,
-    dj_id: Sequelize.INTEGER
-    });
+var Song = connection.define('songtest', {
+    Artist: {type: Sequelize.STRING, allowNull: false},
+    Title: {type: Sequelize.STRING, allowNull: false},
+    dj_id: {type: Sequelize.INTEGER, allowNull: false}
+})
+
 
 //Handles GET request
 router.get ('/', (req, res, next) => {
+    
     res.status(200).json({
         message: 'Test song title'
     });
@@ -23,23 +25,31 @@ router.get ('/', (req, res, next) => {
 
 //Handles POST request
 router.post ('/', (req, res, next) => {
-    const dbSong = {
+    /*const dbSong = {
         Artist: req.body.Artist,
         Title: req.body.Title
-    };
-    /*
-    connection.sync().then(() => Song.create({
-        Artist: req.body.Artist,
-        title: req.body.Title
-    }))
-    .then( name => {
-        console.log(name.toJSON());
-    });
-    */
+    };*/
+    
+    
+    connection.sync({
+        force: true
+    })
+    .then(function () {
+        Song.create({
+            Artist: req.body.Artist,
+            Title: req.body.Title,
+            dj_id: parseInt(req.body.dj_id)        
+        }).save()
+    })
 
     res.status(201).json({
-        dbSong: dbSong
+        artist: req.body.Artist,
+        title: req.body.title
     });
+
+    //res.status(201).json({
+    //    dbSong: dbSong
+    //});
 });
 
 module.exports = router;
