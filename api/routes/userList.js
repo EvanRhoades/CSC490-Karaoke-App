@@ -23,15 +23,15 @@ router.get ('/', (req, res, next) => {
 //Handles POST request
 router.post ('/', (req, res, next) => {
     connection.sync({
-        force: true
+        force: false
     })
-    .then(function () {
+    .then( function () {
         User.create({
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             dj_id: parseInt(req.body.dj_id)        
-        }).save()
+        })
     })
 });
 

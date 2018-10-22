@@ -32,19 +32,19 @@ router.post ('/', (req, res, next) => {
     
     
     connection.sync({
-        force: true
+        force: false
     })
-    .then(function () {
+    .then(() => {
         Song.create({
             Artist: req.body.Artist,
             Title: req.body.Title,
             dj_id: parseInt(req.body.dj_id)        
-        }).save()
+        })
     })
 
     res.status(201).json({
         artist: req.body.Artist,
-        title: req.body.title
+        title: req.body.Title
     });
 
     //res.status(201).json({
