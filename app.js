@@ -5,8 +5,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
 
-//const connection = new Sequelize( 'karaokeinstance', 'wardadmin', 'Karaoke490');
-
 //Set Request Route
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
@@ -14,10 +12,10 @@ const memberRoutes = require ('./api/routes/membership');
 
 
 
-//Intialize Morgan logger and body-parser for json
-//app.use(morgan('dev'));
-//app.use(bodyParser.urlencoded({extended: true}));
-//app.use(bodyParser.json());
+//Intialize Morgan logger and body-parser for json.
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 /*/CORS Handling
 app.use((req, res, next) => {
