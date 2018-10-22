@@ -1,48 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
+const Sequelize = require('sequelize');
+const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.env.bird, {
+    host: 'karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com',
+    port: 3306,
+    dialect: 'mysql'
+});
 
 //object for Schema
-const User = require('../modeling/users')
+var User = connection.define ('testMembership', {
+    email: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
+    firstName: {type: Sequelize.STRING, allowNull: false},
+    lastName: {type: Sequelize.STRING, allowNull: false},
+    dj_id: {type: Sequelize.STRING, allowNull: true}
+});
 
 //Handles GET requests
 router.get ('/', (req, res, next) => {
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    };
 
-    User.findById(user.email)
-    .exec()
-    .then(doc => {
-        console.log(doc);
-        res.status(200).json({doc});
-    }).catch (err => {
-        console.log(err);
-        res.status(500).json({error: err});
-    })
-   
-    res.status(200).json({
-        userName: user.email
-    });
 });
 
 //Handles POST request
 router.post ('/', (req, res, next) => {
-    const user = new User ({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    });
-
-    user.save().then(result => {
-        console.log(result);
-    }).catch(err => console.log(err));
-
-    res.status(201).json({
-        message: 'Test adding user function'
-    });
+    connection.sync({
+        force: true
+    })
+    .then(function () {
+        User.create({
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            dj_id: parseInt(req.body.dj_id)        
+        }).save()
+    })
 });
 
 //Handle GET with a sub-URL

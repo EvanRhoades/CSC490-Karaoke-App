@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Song = require('../../models/song');
+//const Song = require('../../models/song');
 const Sequelize = require('sequelize');
 const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.env.bird, {
     host: 'karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com',
@@ -8,6 +8,11 @@ const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.
     dialect: 'mysql'
 });
 
+var Song = connection.define('songtest', {
+    Artist: {type: Sequelize.STRING, allowNull: false},
+    Title: {type: Sequelize.STRING, allowNull: false},
+    dj_id: {type: Sequelize.INTEGER, allowNull: false}
+})
 
 
 //Handles GET request
@@ -25,21 +30,21 @@ router.post ('/', (req, res, next) => {
         Title: req.body.Title
     };*/
     
-    const song = new Song();
-
+    
     connection.sync({
         force: true
     })
     .then(function () {
-        song.create({
+        Song.create({
             Artist: req.body.Artist,
-            Title: req.body.Title
-        })
+            Title: req.body.Title,
+            dj_id: parseInt(req.body.dj_id)        
+        }).save()
     })
 
     res.status(201).json({
-        artist: song.body.Artist,
-        title: song.body.title
+        artist: req.body.Artist,
+        title: req.body.title
     });
 
     //res.status(201).json({
