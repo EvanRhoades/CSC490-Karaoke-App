@@ -7,6 +7,7 @@ module.exports = {
     database: 'karaoke490',
     host: 'karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com',
     dialect: 'mysql'
+    
   },
   test: {
     username: process.env.garbageman,
