@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'globals.dart' as globals;
 
 // simply starts the app
 void main() => runApp(new MyApp());

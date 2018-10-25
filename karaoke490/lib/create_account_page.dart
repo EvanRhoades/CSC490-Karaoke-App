@@ -22,12 +22,12 @@ class _CreatePageState extends State<CreatePage> {
     final form = formKey2.currentState;
 
     // if the input is syntactically valid, we save it
-    if (form.validate()) {
-      if (_passwordC != _tempPass) // NEEDS FINISHING; THIS IS NOT AN ACTUAL VALIDATION
-        print("passwords do not match");
+    if (form.validate() && _passwordC == _tempPass) {
       form.save();
       createAccount();
     }
+    else
+      print("Passwords do not match.");
   }
 
   // if we are good to go, we try to use the user input to login
@@ -38,7 +38,7 @@ class _CreatePageState extends State<CreatePage> {
     scaffoldKey2.currentState.showSnackBar(snackbar);
 
     // SEAN: INSERT CODE HERE
-    // variables: _emailC and _passwordC
+    // variables: _emailC, _passwordC, and _usernameC
     print("email: $_emailC");
   }
 
