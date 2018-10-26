@@ -14,6 +14,8 @@ class _CreatePageState extends State<CreatePage> {
   String _emailC;
   String _usernameC;
   String _passwordC;
+  String _fName;
+  String _lName;
   String _tempPass; // for comparison to see if the passwords match
 
   // what will be done when they press "create account"
@@ -38,7 +40,9 @@ class _CreatePageState extends State<CreatePage> {
     scaffoldKey2.currentState.showSnackBar(snackbar);
 
     // SEAN: INSERT CODE HERE
-    // variables: _emailC, _passwordC, and _usernameC
+    // variables: _emailC, _passwordC, _fName, _lName, and _usernameC
+
+    // TEST CODE PLEASE IGNORE
     print("email: $_emailC");
   }
 
@@ -84,6 +88,24 @@ class _CreatePageState extends State<CreatePage> {
                     !val.contains('@') ? 'Invalid Email' : null,
                     // assigns user input to appropriate variable
                     onSaved: (val) => _emailC = val,
+                  ),
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: "First Name"),
+                    // validates email input; val = user input
+                    validator: (val) => val.length < 2
+                        ? 'First name should be at least 4 characters'
+                        : null,
+                    // assigns user input to appropriate variable
+                    onSaved: (val) => _fName = val,
+                  ),
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: "Last Name"),
+                    // validates email input; val = user input
+                    validator: (val) => val.length < 2
+                        ? 'Last name should be at least 2 characters'
+                        : null,
+                    // assigns user input to appropriate variable
+                    onSaved: (val) => _lName = val,
                   ),
                   new TextFormField(
                     decoration: new InputDecoration(labelText: "Username"),

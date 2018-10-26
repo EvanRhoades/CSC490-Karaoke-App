@@ -18,10 +18,10 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   _JoinOrCreatePageState() {
     // SEAN: INSERT CODE HERE
     // check if this user is a DJ or not
-    // perhaps I should get this value when the user logs in, I'm not sure
+    // we should get this value when the user logs in
 
     // this is how you access the global variables from "globals.dart"
-    globals.isDJ = true;
+    // globals.isDJ = true;
   }
 
   // adjust color of button depending on whether or not the user is a DJ
@@ -64,6 +64,16 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
       );
       scaffoldKey3.currentState.showSnackBar(snackbar);
     }
+  }
+
+  IconData whichIcon() {
+    IconData lockOrUnlock;
+
+    if (globals.isDJ)
+      lockOrUnlock = Icons.lock_open;
+    else
+      lockOrUnlock = Icons.lock;
+    return lockOrUnlock;
   }
 
   @override
@@ -127,6 +137,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
           new Padding(
             padding: const EdgeInsets.only(top: 50.0),
           ),
+          new Icon(whichIcon()),
           new Container(
             alignment: Alignment.center,
             child: new RaisedButton(
