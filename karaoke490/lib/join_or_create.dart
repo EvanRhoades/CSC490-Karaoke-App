@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'choose_song_page.dart';
 import 'create_event_page.dart';
 import 'globals.dart' as globals;
+import 'queue_dj_page.dart';
 
 class JoinOrCreatePage extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   void _createEvent() {
     if (globals.isDJ)
       Navigator.push(context,
-          new MaterialPageRoute(builder: (context) => new CreateEventPage()));
+          new MaterialPageRoute(builder: (context) => new QueueDjPage()));
     else {
       final snackbar = new SnackBar(
         content:
@@ -81,6 +82,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     return new Scaffold(
         key: scaffoldKey3,
         appBar: AppBar(
+          centerTitle: true,
           title: new Text("Join or Create Event"),
         ),
         backgroundColor: Colors.lightGreen,
@@ -114,6 +116,9 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                         : null,
                     // assigns user input to appropriate variable
                     onSaved: (val) => _eventCodeUser = val,
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.all(5.0),
                   ),
                   new RaisedButton(
                     child: new RichText(

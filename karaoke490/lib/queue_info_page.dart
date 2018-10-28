@@ -11,6 +11,7 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: new Text("Queue Info"),
       ),
       backgroundColor: Colors.lightGreen,

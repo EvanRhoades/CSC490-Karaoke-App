@@ -51,6 +51,7 @@ class _CreatePageState extends State<CreatePage> {
     return new Scaffold(
       key: scaffoldKey2,
       appBar: AppBar(
+        centerTitle: true,
         title: new Text("Create Account"),
       ),
       backgroundColor: Colors.lightGreen,
