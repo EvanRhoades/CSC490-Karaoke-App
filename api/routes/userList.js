@@ -12,6 +12,7 @@ var User = connection.define ('testMembership', {
     email: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
     firstName: {type: Sequelize.STRING, allowNull: false},
     lastName: {type: Sequelize.STRING, allowNull: false},
+    password: {type: Sequelize.STRING, allowNull: false},
     dj_id: {type: Sequelize.STRING, allowNull: true}
 });
 
@@ -30,6 +31,7 @@ router.post ('/', (req, res, next) => {
             email: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
+            password: req.body.password,
             dj_id: parseInt(req.body.dj_id)        
         })
     })

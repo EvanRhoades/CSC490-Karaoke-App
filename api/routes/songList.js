@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const Song = require('../../models/song');
 const Sequelize = require('sequelize');
 const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.env.bird, {
     host: 'karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com',
@@ -38,17 +37,13 @@ router.get ('/:artistSearch', (req, res, next) => {
 
 //Handles POST request
 router.post ('/', (req, res, next) => {
-    /*const dbSong = {
-        Artist: req.body.Artist,
-        Title: req.body.Title
-    };*/
     
     
     connection.sync({
         force: false
     })
     .then(() => {
-        Song.create({
+        Song.bulkCreate({
             Artist: req.body.Artist,
             Title: req.body.Title,
             dj_id: parseInt(req.body.dj_id),
@@ -61,10 +56,7 @@ router.post ('/', (req, res, next) => {
         artist: req.body.Artist,
         title: req.body.Title
     });
-
-    //res.status(201).json({
-    //    dbSong: dbSong
-    //});
+    
 });
 
 module.exports = router;
