@@ -37,13 +37,13 @@ router.get ('/:artistSearch', (req, res, next) => {
 
 //Handles POST request
 router.post ('/', (req, res, next) => {
-    
+    v
     
     connection.sync({
         force: false
     })
     .then(() => {
-        Song.bulkCreate({
+        Song.create({
             Artist: req.body.Artist,
             Title: req.body.Title,
             dj_id: parseInt(req.body.dj_id),
