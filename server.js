@@ -1,3 +1,4 @@
+//This node sets up Server use and ports
 const http = require ('http');
 const app = require ('./app');
 

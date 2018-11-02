@@ -1,3 +1,4 @@
+//Declaring Middleware to use
 const express = require('express');
 const router = express.Router();
 const Sequelize = require('sequelize');
@@ -7,7 +8,9 @@ const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.
     dialect: 'mysql'
 });
 
-const Op = Sequelize.Op;
+//const Op = Sequelize.Op;
+
+//Defines Schema for songs
 var Song = connection.define('songtest', {
     Artist: {type: Sequelize.STRING, allowNull: false},
     Title: {type: Sequelize.STRING, allowNull: false},
@@ -17,27 +20,35 @@ var Song = connection.define('songtest', {
 })
 
 
-//Handles GET request
-router.get ('/:artistSearch', (req, res, next) => {
-    const keyA = req.param.artistSearch;
-    
-    var songs = Song.findAll({
-        where: {
-            loweredArtist: {
-                [Op.like]: '%'+ keyA +'%'
-            }
-        }
-    }).toJSON();
-
-
-    res.status(200).json({
-        message: songs 
-    });
+/*Handles finding all songs under a DJ's ID and then returns them as a JSON file 
+Uses POST instead of GET because it can take parameters in a much more effeceint fashion
+@params JSON dj_id
+@returns JSON on true
+@returns 0 on false
+*/
+router.post ('/event', (req, res, next) => {
+    if(parseInt(req.body.dj_id) > 0){
+        Song.findAll({where: {dj_id: parseInt(req.body.dj_id)}})
+        .then( list => {
+            res.status(200).json({
+                message: "Here is the Song list"
+            })
+            return toJson(list);
+        })
+    } else {
+        res.status(404).json({
+            message: "No list exist for this ID"
+        })
+        return 0;
+    }
 });
 
-//Handles POST request
-router.post ('/', (req, res, next) => {
-    v
+/*Handles inserting songs into the DB via POST
+Has the songs passed one at a time so it can parse the dj_id
+@params JSON title: artist: dj_id:
+@returns HTTP status
+*/
+router.post ('/', (req, res, next) => {   
     
     connection.sync({
         force: false
