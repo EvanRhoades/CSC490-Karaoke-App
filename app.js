@@ -1,4 +1,4 @@
-//Sets up requirements/dependencies
+//Declaring Middleware to use
 const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
@@ -18,7 +18,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-/*/CORS Handling
+/*/CORS Handling Freezes request as is; looking into if needed so commented out for now
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Conrol-Allow-Headers",
@@ -27,12 +27,14 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE')
         return res.status(200).json({});
     };
-})
-*/
+})*/
+
+//Intializes the URIs
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
 app.use ('/membership', memberRoutes);
 
+//Returns error statuses when routes not reached correctly
 app.use((req, res, next) => {
     const error = new Error('Not found!');
     error.status = 404;
