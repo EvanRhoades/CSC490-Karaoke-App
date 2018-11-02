@@ -18,7 +18,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-/*/CORS Handling Freezes request as is; looking into if needed so commented out for now
+/*
+/CORS Handling Freezes request as is; looking into if needed so commented out for now
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Conrol-Allow-Headers",
