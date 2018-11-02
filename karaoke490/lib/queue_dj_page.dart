@@ -98,7 +98,7 @@ class _QueueDjPageState extends State<QueueDjPage> {
           centerTitle: true,
           title: new Text("Event Management"),
         ),
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.green[200],
         // we need buttons and things below the list, so I put the list in a column
         body: new Column(
           children: <Widget>[
@@ -109,10 +109,10 @@ class _QueueDjPageState extends State<QueueDjPage> {
               itemBuilder: (BuildContext context, int index) {
                 queuePlace = index + 1;
                 return new Card(
-                  shape: Border(bottom: BorderSide(color: Colors.red)),
+                  shape: Border(bottom: BorderSide(color: Colors.red[900])),
                   child: new Container(
                     width: cWidth,
-                    color: Colors.lightGreen,
+                    color: Colors.green[200],
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[

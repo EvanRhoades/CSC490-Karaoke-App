@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         centerTitle: true,
         title: new Text("Login"),
       ),
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.green[200],
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               text: 'Happy Funtime Karaoke',
               style: TextStyle(
                 fontSize: 25.0,
-                color: Colors.red,
+                color: Colors.red[900],
                 fontWeight: FontWeight.bold,
                 letterSpacing: 3.0,
                 height: 4.0,
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             child: new RaisedButton(
               child: new Text("Create Account"),
-              color: Colors.red,
+              color: Colors.red[900],
               onPressed: _gotoCreate,
             )),
       ]),

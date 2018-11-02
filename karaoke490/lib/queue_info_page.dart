@@ -14,7 +14,7 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
         centerTitle: true,
         title: new Text("Queue Info"),
       ),
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.green[200],
       body: 
       new Text('Your song: ${globals.djSonglist[globals.selectedSongIndex]}'),
     );

@@ -11,7 +11,6 @@ class JoinOrCreatePage extends StatefulWidget {
 
 class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   final scaffoldKey3 = new GlobalKey<ScaffoldState>();
-
   final formKey3 = new GlobalKey<FormState>();
   String _eventCodeUser;
 
@@ -85,7 +84,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
           centerTitle: true,
           title: new Text("Join or Create Event"),
         ),
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Colors.green[200],
         body: new ListView(children: <Widget>[
           new Container(
             alignment: Alignment.center,
@@ -94,7 +93,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                 text: 'Happy Funtime Karaoke',
                 style: TextStyle(
                   fontSize: 25.0,
-                  color: Colors.red,
+                  color: Colors.red[900],
                   fontWeight: FontWeight.bold,
                   letterSpacing: 3.0,
                   height: 4.0,

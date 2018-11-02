@@ -54,7 +54,7 @@ class _CreatePageState extends State<CreatePage> {
         centerTitle: true,
         title: new Text("Create Account"),
       ),
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.green[200],
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,
@@ -63,7 +63,7 @@ class _CreatePageState extends State<CreatePage> {
               text: 'Happy Funtime Karaoke',
               style: TextStyle(
                 fontSize: 25.0,
-                color: Colors.red,
+                color: Colors.red[900],
                 fontWeight: FontWeight.bold,
                 letterSpacing: 3.0,
                 height: 4.0,
