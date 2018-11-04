@@ -83,6 +83,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
         appBar: AppBar(
           centerTitle: true,
           title: new Text("Join or Create Event"),
+          automaticallyImplyLeading: false,
         ),
         backgroundColor: Colors.green[200],
         body: new ListView(children: <Widget>[

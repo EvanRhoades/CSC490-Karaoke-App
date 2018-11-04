@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
+import 'join_or_create.dart';
 
 class QueueDjPage extends StatefulWidget {
   @override
   _QueueDjPageState createState() => new _QueueDjPageState();
 }
 
-class _QueueDjPageState extends State<QueueDjPage> {
+class _QueueDjPageState extends State<QueueDjPage>
+    with SingleTickerProviderStateMixin {
+  // sets background color for this page
+  // this will only change when the dj is trying to exit
+  Color backColor = Colors.green[200];
+
   // up and down icons that appear when editing the queue
   Icon upIcon = new Icon(Icons.arrow_upward);
   Icon downIcon = new Icon(Icons.arrow_downward);
@@ -19,9 +25,10 @@ class _QueueDjPageState extends State<QueueDjPage> {
 
   // a temporary string for rotating list data around
   String temp;
+
   // this is the "up button" for moving a participant up in the queue; it will only appear when the user presses "edit"
   IconButton upButton(int ind) {
-    if (editSwitch == true){
+    if (editSwitch == true) {
       return new IconButton(
         icon: upIcon,
 
@@ -29,11 +36,11 @@ class _QueueDjPageState extends State<QueueDjPage> {
         onPressed: () {
           setState(() {
             if (ind != 0) {
-              temp = globals.participantList[ind-1];
-              globals.participantList[ind-1] = globals.participantList[ind];
+              temp = globals.participantList[ind - 1];
+              globals.participantList[ind - 1] = globals.participantList[ind];
               globals.participantList[ind] = temp;
-              temp = globals.participantSongs[ind-1];
-              globals.participantSongs[ind-1] = globals.participantSongs[ind];
+              temp = globals.participantSongs[ind - 1];
+              globals.participantSongs[ind - 1] = globals.participantSongs[ind];
               globals.participantSongs[ind] = temp;
             }
           });
@@ -44,26 +51,25 @@ class _QueueDjPageState extends State<QueueDjPage> {
     else
       return new IconButton(
         icon: nullIcon,
-        onPressed: () {
-        },
+        onPressed: () {},
       );
   }
 
   // this is the "up button" for moving a participant up in the queue; it will only appear when the user presses "edit"
   IconButton downButton(int ind) {
-    if (editSwitch == true){
+    if (editSwitch == true) {
       return new IconButton(
         icon: downIcon,
 
         // when the button is pressed, move the data around and show it to the dj
         onPressed: () {
           setState(() {
-            if (ind != globals.participantSongs.length-1) {
-              temp = globals.participantList[ind+1];
-              globals.participantList[ind+1] = globals.participantList[ind];
+            if (ind != globals.participantSongs.length - 1) {
+              temp = globals.participantList[ind + 1];
+              globals.participantList[ind + 1] = globals.participantList[ind];
               globals.participantList[ind] = temp;
-              temp = globals.participantSongs[ind+1];
-              globals.participantSongs[ind+1] = globals.participantSongs[ind];
+              temp = globals.participantSongs[ind + 1];
+              globals.participantSongs[ind + 1] = globals.participantSongs[ind];
               globals.participantSongs[ind] = temp;
             }
           });
@@ -74,15 +80,86 @@ class _QueueDjPageState extends State<QueueDjPage> {
     else
       return new IconButton(
         icon: nullIcon,
-        onPressed: () {
-        },
+        onPressed: () {},
       );
   }
 
+  // edit queue button changes when pressed; these help facilitate those changes
+  String editButtonText = "Edit Queue";
+  Color editColor = Colors.amber;
+  Color editColor2 = Colors.amber;
+
   // simply flips the switch to allow the dj to edit the queue
   void editQueue() {
-    editSwitch = true;
-    setState(() {});
+    // flip edit switch on
+    if (editSwitch == false) {
+      editSwitch = true;
+      editButtonText = "Save Changes";
+      editColor = Colors.teal;
+      editColor2 = Colors.teal[200];
+      setState(() {});
+    }
+    // flip edit switch off
+    else {
+      editSwitch = false;
+      editButtonText = "Edit Queue";
+      editColor = Colors.amber;
+      editColor2 = Colors.green[200];
+      /*
+        SEAN: At this point in time, the queue edit has been saved and
+        should be communicated to the other participants
+       */
+      setState(() {});
+    }
+  }
+
+  bool yesNoVisible = false;
+  IconData beginIcon = Icons.audiotrack;
+  bool eventOngoing = false;
+  String beginButtonText = "Begin Event";
+  Color beginColor = Colors.amber;
+
+  // begins the event,
+  void beginEvent() {
+    // if event has not begun yet, begin it
+    if (!eventOngoing) {
+      beginButtonText = "Conclude Event";
+      beginColor = Colors.red[900];
+      beginIcon = Icons.close;
+      eventOngoing = true;
+      setState(() {});
+    }
+    // if dj is trying to finish event, double check
+    else {
+      backColor = Colors.white;
+      beginButtonText = "Are you sure?";
+      beginColor = Colors.white;
+      beginIcon = Icons.warning;
+      yesNoVisible = true;
+      setState(() {});
+    }
+  }
+
+  // if dj is trying to finish event, display "Yes" and "no" buttons
+  void yesOrNo(bool yesNo) {
+    // if yes, exit event
+    if (yesNo) {
+      /*
+        SEAN: At this moment, the DJ is concluding the event.  This info needs
+        to be given to the server to be passed on to the participants.
+      */
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
+    }
+    // if no, go back to previous state
+    else {
+      backColor = Colors.green[200];
+      beginButtonText = "Conclude Event";
+      beginColor = Colors.red[900];
+      beginIcon = Icons.close;
+      yesNoVisible = false;
+      setState(() {});
+    }
   }
 
   @override
@@ -97,8 +174,9 @@ class _QueueDjPageState extends State<QueueDjPage> {
         appBar: AppBar(
           centerTitle: true,
           title: new Text("Event Management"),
+          automaticallyImplyLeading: false,
         ),
-        backgroundColor: Colors.green[200],
+        backgroundColor: backColor,
         // we need buttons and things below the list, so I put the list in a column
         body: new Column(
           children: <Widget>[
@@ -112,7 +190,7 @@ class _QueueDjPageState extends State<QueueDjPage> {
                   shape: Border(bottom: BorderSide(color: Colors.red[900])),
                   child: new Container(
                     width: cWidth,
-                    color: Colors.green[200],
+                    color: editColor2,
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -128,7 +206,8 @@ class _QueueDjPageState extends State<QueueDjPage> {
                           ),
                         ),
                         new Icon(Icons.chevron_right),
-                        Expanded( // displays the participant's chosen song
+                        Expanded(
+                          // displays the participant's chosen song
                           child: new RichText(
                             text: new TextSpan(
                               text: '${globals.participantSongs[index]}',
@@ -141,12 +220,14 @@ class _QueueDjPageState extends State<QueueDjPage> {
                             ),
                           ),
                         ),
-                        downButton(index), // these buttons appear when the "edit" button below is pressed
+                        downButton(index),
+                        // these buttons appear when the "edit" button below is pressed
                         upButton(index),
                         new Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                         ),
-                        Expanded( // displays the username of the participant
+                        Expanded(
+                          // displays the username of the participant
                           child: new RichText(
                             text: new TextSpan(
                               text: '${globals.participantList[index]}',
@@ -168,10 +249,11 @@ class _QueueDjPageState extends State<QueueDjPage> {
             new Padding(
               padding: const EdgeInsets.all(5.0),
             ),
-            new RaisedButton( // button for editing the queue
+            // button for editing the queue
+            new RaisedButton(
               child: new RichText(
                 text: new TextSpan(
-                  text: 'Edit Queue',
+                  text: editButtonText,
                   style: TextStyle(
                     fontSize: 15.0,
                     color: Colors.black,
@@ -180,7 +262,9 @@ class _QueueDjPageState extends State<QueueDjPage> {
                   ),
                 ),
               ),
-              color: Colors.amber,
+              color: editColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.elliptical(6.0, 6.0))),
               padding:
                   EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
               onPressed: editQueue,
@@ -191,13 +275,35 @@ class _QueueDjPageState extends State<QueueDjPage> {
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Icon(Icons.subdirectory_arrow_right),
-                  new RaisedButton( // begins the event
+                  yesNoVisible
+                      ? new RaisedButton(
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          child: new RichText(
+                            text: new TextSpan(
+                              text: "Yes",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black,
+                                letterSpacing: 1.0,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+                          color: Colors.green[900],
+                          padding: EdgeInsets.only(
+                              left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                          onPressed: () => yesOrNo(true),
+                        )
+                      : new Text(""),
+                  new Icon(beginIcon),
+                  // begins the event
+                  new RaisedButton(
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     child: new RichText(
                       text: new TextSpan(
-                        text: 'Begin Event',
+                        text: beginButtonText,
                         style: TextStyle(
                           fontSize: 15.0,
                           color: Colors.black,
@@ -206,12 +312,33 @@ class _QueueDjPageState extends State<QueueDjPage> {
                         ),
                       ),
                     ),
-                    color: Colors.lightBlue,
+                    color: beginColor,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
-                    onPressed: editQueue,
+                    onPressed: beginEvent,
                   ),
-                  new Icon(Icons.subdirectory_arrow_left),
+                  new Icon(beginIcon),
+                  yesNoVisible
+                      ? new RaisedButton(
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          child: new RichText(
+                            text: new TextSpan(
+                              text: "No",
+                              style: TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black,
+                                letterSpacing: 1.0,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+                          color: Colors.red[900],
+                          padding: EdgeInsets.only(
+                              left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                          onPressed: () => yesOrNo(false),
+                        )
+                      : new Text(""),
                 ]),
           ],
         ));
