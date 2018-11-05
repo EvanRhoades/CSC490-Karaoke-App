@@ -6,19 +6,12 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Main Page</title>
+        <title>Upload Songs</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             .body{
                 background: #79ce99;
-            }
-            .header {
-                padding: 50px;
-                text-align: center;
-                background: #a0ffc3;
-                color: red;
-                font-size: 30px;
             }            
             .navbar {
                 overflow: hidden; 
@@ -39,15 +32,10 @@ and open the template in the editor.
             .navbar a:hover {
                 background-color: #ddd; 
                 color: black; 
-            }
-            
+            }            
         </style>
     </head>
     <body class = "body">
-        
-        <div class ="header">           
-           <h1>Happy Funtime Karaoke</h1>
-        </div>
         <div class ="navbar">
             <a href="Index.html">Main</a>
             <a href="CreateAccount.html">Create Account</a>
@@ -56,5 +44,35 @@ and open the template in the editor.
             <a href="UploadSongs.html">Upload Songs</a>
             <a href="#" class="right">About</a>
         </div>
+        <input type="button" value="Upload Songlist" onclick="showDiv()" />
+        <div id="upload"  style="display:none" >
+            <input type="file" id="myFile" accept=".csv" onchange="getFile()" required>
+            <input type="submit" name="submit" value="Upload"> 
+        </div>
+        <div id="notDJ" style="display:none" >
+            Not a DJ
+        </div>
+        <div id="notLoggedIn" style="display:none" >
+            Not logged in
+        </div>
+        <script>
+            function getFile() {
+                var x = document.getElementById("myFile");
+                //send x to server with username
+        </script>
+        <script>
+                function showDiv() {
+                    var id = 1; //for now id is hard coded but in future will check the id of who is logged in to see if they are a dj
+                    if (id === 1) {
+                        document.getElementById('upload').style.display = "block";
+                    }
+                    if (id === 0) {
+                        document.getElementById('notDJ').style.display = "block";
+                    }
+                    if (id === null) {
+                        document.getElementById('notLoggedIn').style.display = "block";
+                    }
+            }
+        </script>
     </body>
 </html>
