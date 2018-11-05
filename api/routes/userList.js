@@ -12,6 +12,7 @@ const connection = new Sequelize( 'karaoke490', process.env.garbageman, process.
 //Defines Schema for User
 var User = connection.define ('testMembership', {
     email: {type: Sequelize.STRING, allowNull: false, primaryKey: true},
+    username: {type: Sequelize.STRING, allowNull: false},
     firstName: {type: Sequelize.STRING, allowNull: false},
     lastName: {type: Sequelize.STRING, allowNull: false},
     password: {type: Sequelize.STRING, allowNull: false},
@@ -69,6 +70,7 @@ router.post ('/', (req, res, next) => {
     .then(() => {        
         User.create({
             email: req.body.email,
+            username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: hash,
