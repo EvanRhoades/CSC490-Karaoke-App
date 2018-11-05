@@ -35,7 +35,7 @@ router.post ('/login', (req, res, next) => {
         .then ( user => {
             if (bcrypt.compare(req.body.password, user.password)){                
                 res.status(200).json({
-                    message: "Login Successful",
+                    //message: "Login Successful",
                     djId: user.dj_id                
                 })
             } else {                
