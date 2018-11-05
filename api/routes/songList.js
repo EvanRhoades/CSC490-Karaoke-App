@@ -33,7 +33,7 @@ router.post ('/event', (req, res, next) => {
             res.status(200).json({
                 message: "Here is the Song list"
             })
-            return toJson(list);
+            return list;
         })
     } else {
         res.status(404).json({

@@ -36,7 +36,7 @@ router.post ('/login', (req, res, next) => {
                 res.status(200).json({
                     message: "Login Successful"                
                 })
-                return toJson(user);
+                return user;
             } else {                
                 res.status(500).json({
                     message: "Invalid Password",
