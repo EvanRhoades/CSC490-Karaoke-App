@@ -31,7 +31,7 @@ router.post ('/event', (req, res, next) => {
         Song.findAll({where: {dj_id: parseInt(req.body.dj_id)}})
         .then( list => {
             res.status(200).json({
-                message: "Here is the Song list",
+                //message: "Here is the Song list",
                 listing: list
             })
             
