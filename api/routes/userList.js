@@ -35,9 +35,9 @@ router.post ('/login', (req, res, next) => {
         .then ( user => {
             if (bcrypt.compare(req.body.password, user.password)){                
                 res.status(200).json({
-                    message: "Login Successful"                
+                    message: "Login Successful",
+                    member: user                
                 })
-                return user;
             } else {                
                 res.status(500).json({
                     message: "Invalid Password",
@@ -85,17 +85,5 @@ router.post ('/', (req, res, next) => {
 
 });
 
-//Handle GET with a sub-URL
-router.get ('/:name', (req, res, next) =>{
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email
-    };
-    res.status(200).json({
-        firstName: firstName,
-        lastName: lastName
-    });
-});
 
 module.exports = router;
