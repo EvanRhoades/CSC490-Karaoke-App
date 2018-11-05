@@ -44,10 +44,26 @@ class _LoginPageState extends State<LoginPage> {
            Point being, I will need a way to access their username, so maybe you
            can just return the username once you finish the validation.
        variables: _email, _password, _validated */
+    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
+    http.post(url, body: {"email":_emailC,"password":_passwordC).then((response){
+      print("Response from attempting to log in");
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+      if(response.body != 0)
+        {
+          _validated = true;
+        }
+        //as soon as response body is corrected edit this so that DJ_id is checked and then edit globals.isDJ
+        //String parseBody = $response.body;
+        //parseBody.indexOf("dj_id")+8
+
+    });
+
+
 
     // DELETE IN THE FUTURE
     // (the following line of code is for my own testing purposes)
-    _validated = true;
+    //_validated = true; commented out by Sean
 
     if (_validated)
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));

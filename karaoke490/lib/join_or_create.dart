@@ -15,9 +15,12 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
 
 
   _JoinOrCreatePageState() {
+
     // SEAN: INSERT CODE HERE
     // check if this user is a DJ or not
     // we should get this value when the user logs in
+
+    //NO CODE NEEDS TO BE DONE HERE BECAUSE THE DJ ID IS RETRIEVED UPON LOGIN
 
     // this is how you access the global variables from "globals.dart"
     // globals.isDJ = true;

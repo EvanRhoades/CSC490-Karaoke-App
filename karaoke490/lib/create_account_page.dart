@@ -39,8 +39,15 @@ class _CreatePageState extends State<CreatePage> {
     );
     scaffoldKey2.currentState.showSnackBar(snackbar);
 
-    // SEAN: INSERT CODE HERE
+    // SEAN: INSERT CODE HERE  Check
     // variables: _emailC, _passwordC, _fName, _lName, and _usernameC
+    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/";
+    http.post(url, body: {"email":_emailC,"firstName":_fName,"lastName":_lName,"password":_passwordC,"dj_id":0}).then((response){
+      print("Response from attempting to create an account");
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+    });
+
 
     // TEST CODE PLEASE IGNORE
     print("email: $_emailC");
