@@ -139,70 +139,68 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     if (!searching) {
       return new ListView.builder(
         // the scrollable list of songs
-        itemCount: globals.djSonglist.length+1,
+        itemCount: globals.djSonglist.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
             shape: Border(bottom: BorderSide(color: Colors.red[900])),
             child: new Container(
               width: cWidth,
               color: Colors.green[200],
-              child: index != globals.djSonglist.length
-                  ? new Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: '${globals.djSonglist[index]}',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.0,
-                              ),
-                            ),
-                          ),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: '${globals.djSonglist[index]}',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.0,
                         ),
-                        new Icon(Icons.keyboard_arrow_right),
-                        new Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
+                      ),
+                    ),
+                  ),
+                  new Icon(Icons.keyboard_arrow_right),
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                  ),
+                  Expanded(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: '${globals.djArtistlist[index]}',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.5,
                         ),
-                        Expanded(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: '${globals.djArtistlist[index]}',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
+                      ),
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                  ),
+                  new RaisedButton(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: 'Select',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.5,
                         ),
-                        new Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                        ),
-                        new RaisedButton(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: 'Select',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
-                          color: Colors.amber,
-                          padding: EdgeInsets.only(
-                              left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
-                          onPressed: () => selectMe(index),
-                        ),
-                      ],
-                    )
-                  : exitButton(),
+                      ),
+                    ),
+                    color: Colors.amber,
+                    padding: EdgeInsets.only(
+                        left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                    onPressed: () => selectMe(index),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -210,70 +208,68 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     } else if (searching) {
       return new ListView.builder(
         // the scrollable list of songs
-        itemCount: globals.userSearchSongs.length + 1,
+        itemCount: globals.userSearchSongs.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
             shape: Border(bottom: BorderSide(color: Colors.red[900])),
             child: new Container(
               width: cWidth,
               color: Colors.green[200],
-              child: index != globals.userSearchSongs.length
-                  ? new Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: '${globals.userSearchSongs[index]}',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.0,
-                              ),
-                            ),
-                          ),
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: '${globals.userSearchSongs[index]}',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.0,
                         ),
-                        new Icon(Icons.keyboard_arrow_right),
-                        new Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
+                      ),
+                    ),
+                  ),
+                  new Icon(Icons.keyboard_arrow_right),
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                  ),
+                  Expanded(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: '${globals.userSearchArtists[index]}',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.5,
                         ),
-                        Expanded(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: '${globals.userSearchArtists[index]}',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
+                      ),
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                  ),
+                  new RaisedButton(
+                    child: new RichText(
+                      text: new TextSpan(
+                        text: 'Select',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.black,
+                          letterSpacing: 1.0,
+                          height: 1.5,
                         ),
-                        new Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                        ),
-                        new RaisedButton(
-                          child: new RichText(
-                            text: new TextSpan(
-                              text: 'Select',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black,
-                                letterSpacing: 1.0,
-                                height: 1.5,
-                              ),
-                            ),
-                          ),
-                          color: Colors.amber,
-                          padding: EdgeInsets.only(
-                              left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
-                          onPressed: () => selectMe(globals.djIndex[index]),
-                        ),
-                      ],
-                    )
-                  : exitButton(),
+                      ),
+                    ),
+                    color: Colors.amber,
+                    padding: EdgeInsets.only(
+                        left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                    onPressed: () => selectMe(globals.djIndex[index]),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -288,27 +284,32 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
   Widget build(BuildContext context) {
     // to help with text wrapping if the song title is too long
     return new Scaffold(
-      appBar: AppBar(centerTitle: true, title: appBarTitle, automaticallyImplyLeading: false, actions: <Widget>[
-        // this is where the search function will go
-        new IconButton(
-          icon: actionIcon,
-          onPressed: () {
-            setState(() {
-              // if they press this button and it is currently the search button, do search things
-              if (this.actionIcon.icon == Icons.search) {
-                this.actionIcon = new Icon(Icons.close);
-                this.appBarTitle = new TextField(
-                  style: new TextStyle(
-                    color: Colors.black,
-                  ),
-                  decoration: new InputDecoration(
-                      prefixIcon: new Icon(Icons.search, color: Colors.black),
-                      hintText: "Enter Search Here",
-                      hintStyle: new TextStyle(color: Colors.black26)),
-                  maxLength: 12,
-                  onSubmitted: (String findMe) {
-                    print(findMe);
-                    /* SEAN: We now have the string to search with
+        appBar: AppBar(
+            centerTitle: true,
+            title: appBarTitle,
+            automaticallyImplyLeading: false,
+            actions: <Widget>[
+              // this is where the search function will go
+              new IconButton(
+                icon: actionIcon,
+                onPressed: () {
+                  setState(() {
+                    // if they press this button and it is currently the search button, do search things
+                    if (this.actionIcon.icon == Icons.search) {
+                      this.actionIcon = new Icon(Icons.close);
+                      this.appBarTitle = new TextField(
+                        style: new TextStyle(
+                          color: Colors.black,
+                        ),
+                        decoration: new InputDecoration(
+                            prefixIcon:
+                                new Icon(Icons.search, color: Colors.black),
+                            hintText: "Enter Search Here",
+                            hintStyle: new TextStyle(color: Colors.black26)),
+                        maxLength: 12,
+                        onSubmitted: (String findMe) {
+                          print(findMe);
+                          /* SEAN: We now have the string to search with
                          Variable: findMe
 
                          We need to search these arrays:
@@ -319,24 +320,26 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                          globals.userSearchSongs
                          globals.userSearchArtists
                       */
-                    searching = true;
-                    listOfSongs();
-                  },
-                );
-              }
-              // else the icon they have pressed is the exit button, so go back
-              else {
-                this.actionIcon = new Icon(Icons.search);
-                this.appBarTitle = new Text("Select a song");
-                searching = false;
-                listOfSongs();
-              }
-            });
-          },
-        ),
-      ]),
-      backgroundColor: backColor,
-      body: listOfSongs(),
-    );
+                          searching = true;
+                        },
+                      );
+                    }
+                    // else the icon they have pressed is the exit button, so go back
+                    else {
+                      this.actionIcon = new Icon(Icons.search);
+                      this.appBarTitle = new Text("Select a song");
+                      searching = false;
+                    }
+                  });
+                },
+              ),
+            ]),
+        backgroundColor: backColor,
+        body: new Column(
+          children: <Widget>[
+            new Expanded(child: listOfSongs()),
+            exitButton(),
+          ],
+        ));
   }
 }

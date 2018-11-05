@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'choose_song_page.dart';
-import 'create_event_page.dart';
 import 'globals.dart' as globals;
 import 'queue_dj_page.dart';
 

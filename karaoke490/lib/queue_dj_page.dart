@@ -162,6 +162,31 @@ class _QueueDjPageState extends State<QueueDjPage>
     }
   }
 
+  Color currentlySinging(int index) {
+    if (eventOngoing) {
+      if (index == 0) {
+        editColor2 = Colors.green;
+        return editColor2;
+      }
+    }
+    if (editSwitch)
+      editColor2 = Colors.teal;
+    else
+      editColor2 = Colors.amber;
+    return editColor2;
+  }
+
+  void nextUp(){
+    if (globals.participantList.length == 0) {
+      setState(() {});
+    }
+    else {
+      globals.participantList.removeAt(0);
+      globals.participantSongs.removeAt(0);
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // to help with text wrapping if the song title is too long
@@ -190,7 +215,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                   shape: Border(bottom: BorderSide(color: Colors.red[900])),
                   child: new Container(
                     width: cWidth,
-                    color: editColor2,
+                    color: currentlySinging(index),
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -249,29 +274,56 @@ class _QueueDjPageState extends State<QueueDjPage>
             new Padding(
               padding: const EdgeInsets.all(5.0),
             ),
-            // button for editing the queue
-            new RaisedButton(
-              child: new RichText(
-                text: new TextSpan(
-                  text: editButtonText,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.black,
-                    letterSpacing: 1.0,
-                    height: 1.5,
+            // button for editing the queue and NEXT UP
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new RaisedButton(
+                  child: new RichText(
+                    text: new TextSpan(
+                      text: editButtonText,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black,
+                        letterSpacing: 1.0,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
+                  color: editColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(6.0, 6.0))),
+                  padding: EdgeInsets.only(
+                      left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                  onPressed: editQueue,
                 ),
-              ),
-              color: editColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.elliptical(6.0, 6.0))),
-              padding:
-                  EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
-              onPressed: editQueue,
+                new Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                ),
+                new RaisedButton(
+                  child: new RichText(
+                    text: new TextSpan(
+                      text: "NEXT UP",
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.black,
+                        letterSpacing: 1.0,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  color: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.all(Radius.elliptical(6.0, 6.0))),
+                  padding: EdgeInsets.only(
+                      left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                  onPressed: nextUp,
+                ),
+              ],
             ),
-            new Padding(
-              padding: const EdgeInsets.all(5.0),
-            ),
+            // button for finishing the event
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
