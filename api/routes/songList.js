@@ -30,8 +30,7 @@ router.post ('/event', (req, res, next) => {
     if(parseInt(req.body.dj_id) > 0){
         Song.findAll({where: {dj_id: parseInt(req.body.dj_id)}})
         .then( list => {
-            res.status(200).json({
-                //message: "Here is the Song list",
+            res.status(200).json({                
                 listing: list
             })
             
@@ -40,7 +39,7 @@ router.post ('/event', (req, res, next) => {
         res.status(404).json({
             message: "No list exist for this ID"
         })
-        return 0;
+        
     }
 });
 

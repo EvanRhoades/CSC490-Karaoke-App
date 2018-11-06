@@ -40,17 +40,15 @@ router.post ('/login', (req, res, next) => {
                 })
             } else {                
                 res.status(500).json({
-                    message: "Invalid Password",
-                                      
-                })
-                return 0;
+                    message: "Invalid Password"                                      
+                })               
             }
         })
     } else {        
         res.status(500).json({
             message: "Invalid email"
         })
-        return 0;
+        
     }
 });
 
