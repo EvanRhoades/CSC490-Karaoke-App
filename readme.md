@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# Packages:
+#   - import 'package:flutter/material.dart';
+=======
 CSC 490 Happy Fun Time Karaoke
 
 Authors:
@@ -36,3 +40,4 @@ https://github.com/flutter/plugins/tree/master/packages/firebase_auth
 ```
 
 
+>>>>>>> b910433fae21de37c1c1cafad6794c33e43dffe4

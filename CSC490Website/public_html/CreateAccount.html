@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .body{
+                background: #79ce99;
+            }            
+            .navbar {
+                overflow: hidden; 
+                background-color: #ffed28;
+            }
+            .navbar a{
+                float: left; 
+                display: block; 
+                color: black; 
+                text-align: center; 
+                padding: 14px 20px; 
+                text-decoration: none; 
+                font-size: 20px;
+            }
+            .navbar a.right {
+                float: right; 
+            }
+            .navbar a:hover {
+                background-color: #ddd; 
+                color: black; 
+            }            
+        </style>
+    </head>
+    
+    <body class="body">
+        <div class ="navbar">
+            <a href="Index.html">Main</a>
+            <a href="CreateAccount.html">Create Account</a>
+            <a href="Login.html">Login</a>
+            <a href="JoinEvent.html">Join Event</a>
+            <a href="UploadSongs.html">Upload Songs</a>
+            <a href="#" class="right">About</a>
+        </div>
+        <center>
+            <h3>Register</h3>
+            
+            <form action ="register" method="post">
+                
+                <table>
+                    <tr>
+                        <td>Username:</td>
+                        <td>
+                            <input type="text" name="user" placeholder="Enter Username" required>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Email:</td>
+                        <td>
+                            <input type="text" name="email" placeholder="Enter Email" required>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Password:</td>
+                        <td>
+                            <input type="password" name="pass" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Re-enter Password:</td>
+                        <td>
+                            <input type="password" name="pass" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <input type="submit" name="submit" value="Login">
+                        </td>
+                        <td>
+                            Already a member?<a href="Login.html">Login</a>
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+            </form>
+        </center>
+    
+    </body>
+
+</html>
