@@ -36,6 +36,34 @@ and open the template in the editor.
         </style>
     </head>
     <body class = "body">
+         <script>
+            function testserver(){
+                $.post(ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList/, "test")
+            }
+        </script>
+        <script>
+            function getFile() {
+                var x = document.getElementById("myFile");
+                Papa.parse(x, config);
+            }
+        </script>
+        <script>    
+            function showDiv() {
+                //sessionStorage.clear();
+                //sessionStorage.setItem("ID", NULL);
+                var id = 1; //for now id is hard coded but in future will check the id of who is logged in to see if they are a dj
+                //id = sessionStorage.getItem("ID");
+                if (id >= 1) {
+                    document.getElementById('upload').style.display = "block";
+                }
+                if (id == 0) {
+                    document.getElementById('notDJ').style.display = "block";
+                }
+                if (id == null) {
+                    document.getElementById('notLoggedIn').style.display = "block";
+                }
+            }
+        </script>
         <div class ="navbar">
             <a href="Index.html">Main</a>
             <a href="CreateAccount.html">Create Account</a>
@@ -46,8 +74,25 @@ and open the template in the editor.
         </div>
         <input type="button" value="Upload Songlist" onclick="showDiv()" />
         <div id="upload"  style="display:none" >
-            <input type="file" id="myFile" accept=".csv" onchange="getFile()" required>
-            <input type="submit" name="submit" value="Upload"> 
+            <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
+          accept=".csv">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function(){
+                    $("button").click(function(){
+                        $.post("ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList",
+                        {
+                          Artist: "Donald Duck",
+                          Title: "Duckburg",
+                          dj_id: 19
+                        },
+                        function(data,status){
+                            alert("Data: " + data + "\nStatus: " + status);
+                        });
+                    });
+                });
+                </script>
+                <button>Upload</button>
         </div>
         <div id="notDJ" style="display:none" >
             Not a DJ
@@ -55,24 +100,9 @@ and open the template in the editor.
         <div id="notLoggedIn" style="display:none" >
             Not logged in
         </div>
-        <script>
-            function getFile() {
-                var x = document.getElementById("myFile");
-                //send x to server with username
-        </script>
-        <script>
-                function showDiv() {
-                    var id = 1; //for now id is hard coded but in future will check the id of who is logged in to see if they are a dj
-                    if (id === 1) {
-                        document.getElementById('upload').style.display = "block";
-                    }
-                    if (id === 0) {
-                        document.getElementById('notDJ').style.display = "block";
-                    }
-                    if (id === null) {
-                        document.getElementById('notLoggedIn').style.display = "block";
-                    }
-            }
-        </script>
+        <div id="output">
+    </div>
+        <script type="text/javascript" src="read-csv.js"></script>
     </body>
 </html>
+
