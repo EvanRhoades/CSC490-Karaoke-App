@@ -18,6 +18,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(express.static('CSC490Website/public_html'));
 
 /*
 app.use((req, res, next) => {
