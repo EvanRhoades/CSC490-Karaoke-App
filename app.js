@@ -4,7 +4,14 @@ const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+var options ={
+    setHeaders: (req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header(
+          "Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        )}
+};
 
 
 //Set Request Route
@@ -12,7 +19,7 @@ const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 const memberRoutes = require ('./api/routes/membership');
 
-app.use(cors());
+//app.use(cors());
 
 //Intialize Morgan logger and body-parser for json.
 app.use(morgan('dev'));
