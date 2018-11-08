@@ -3,6 +3,7 @@ const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 
@@ -11,9 +12,9 @@ const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 const memberRoutes = require ('./api/routes/membership');
 
+app.use(cors());
 
-
-//Intialize Morgan logger and body-parser for json.
+/*/Intialize Morgan logger and body-parser for json.
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
     }
     next();
   });
+*/
 
 //Intializes the URIs
 app.use('/songList', songRoutes);
