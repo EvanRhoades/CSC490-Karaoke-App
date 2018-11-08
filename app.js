@@ -14,11 +14,12 @@ const memberRoutes = require ('./api/routes/membership');
 
 app.use(cors());
 
-/*/Intialize Morgan logger and body-parser for json.
+//Intialize Morgan logger and body-parser for json.
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+/*
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
