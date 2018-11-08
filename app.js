@@ -3,7 +3,6 @@ const express = require ('express');
 const app = express ();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 
 
 
@@ -19,8 +18,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(cors());
-/*/CORS Handling for the webpage
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -32,7 +29,7 @@ app.use((req, res, next) => {
         return res.status(200).json({});
     }
     next();
-  });*/
+  });
 
 //Intializes the URIs
 app.use('/songList', songRoutes);
