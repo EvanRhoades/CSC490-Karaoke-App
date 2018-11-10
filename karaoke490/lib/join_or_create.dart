@@ -29,9 +29,9 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   // adjust color of button depending on whether or not the user is a DJ
   Color _buttonColor() {
     if (globals.isDJ)
-      return Colors.amber;
+      return Colors.cyan;
     else
-      return Colors.green;
+      return Colors.grey;
   }
 
   // what happens when the user clicks "Join Karaoke Event"
@@ -83,11 +83,12 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     return new Scaffold(
         key: scaffoldKey3,
         appBar: AppBar(
+          backgroundColor: Colors.black,
           centerTitle: true,
           title: new Text("Join or Create Event"),
           automaticallyImplyLeading: false,
         ),
-        backgroundColor: Colors.green[200],
+        backgroundColor: Colors.white,
         body: new ListView(children: <Widget>[
           new Container(
             alignment: Alignment.center,
@@ -96,7 +97,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                 text: 'Happy Funtime Karaoke',
                 style: TextStyle(
                   fontSize: 25.0,
-                  color: Colors.red[900],
+                  color: Colors.cyan,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 3.0,
                   height: 4.0,
@@ -112,6 +113,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                 child: new Column(children: <Widget>[
                   new TextFormField(
                     decoration: new InputDecoration(labelText: "Event Code"),
+                    style: TextStyle(color: Colors.black),
                     // validates email input; val = user input
                     validator: (val) => val.length < 6
                         ? 'Event code should be 6 characters'
@@ -134,7 +136,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                         ),
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     padding: EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0, top: 2.0),
                     onPressed: _routeJoin,

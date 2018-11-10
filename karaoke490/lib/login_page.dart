@@ -80,10 +80,11 @@ class _LoginPageState extends State<LoginPage> {
     return new Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: new Text("Login"),
       ),
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.white,
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
               text: 'Happy Funtime Karaoke',
               style: TextStyle(
                 fontSize: 25.0,
-                color: Colors.red[900],
+                color: Colors.cyan,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 3.0,
                 height: 4.0,
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   new RaisedButton(
                     child: new Text("Login"),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     onPressed: _submit,
                   )
                 ],
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
             alignment: Alignment.center,
             child: new RaisedButton(
               child: new Text("Create Account"),
-              color: Colors.red[900],
+              color: Colors.cyan,
               onPressed: _gotoCreate,
             )),
       ]),

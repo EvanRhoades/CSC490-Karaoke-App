@@ -24,13 +24,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
 
   // indicates whether to display search results or entire list
   bool searching = false;
-  Color backColor = Colors.green[200];
+  Color backColor = Colors.white;
 
   bool yesNoVisible = false;
-  IconData beginIcon = Icons.audiotrack;
+  IconData beginIcon = Icons.close;
   bool userLeaving = false;
   String leaveButtonText = "Leave Event";
-  Color beginColor = Colors.red[900];
+  Color beginColor = Colors.black;
 
   void leaveEvent() {
     // If participant wants to leave...
@@ -38,14 +38,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
       userLeaving = true;
       backColor = Colors.white;
       leaveButtonText = "Are you sure?";
-      beginColor = Colors.white;
       beginIcon = Icons.warning;
       yesNoVisible = true;
       setState(() {});
     }
   }
 
-  // if dj is trying to finish event, display "Yes" and "no" buttons
+  // if participant is trying to finish event, display "Yes" and "no" buttons
   void yesOrNo(bool yesNo) {
     // if yes, exit event
     if (yesNo) {
@@ -55,10 +54,9 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     // if no, go back to previous state
     else {
       userLeaving = false;
-      backColor = Colors.green[200];
+      backColor = Colors.white;
       leaveButtonText = "Leave Event";
-      beginColor = Colors.red[900];
-      beginIcon = Icons.audiotrack;
+      beginIcon = Icons.close;
       yesNoVisible = false;
       setState(() {});
     }
@@ -76,13 +74,14 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   text: "Yes",
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     letterSpacing: 1.0,
                     height: 1.5,
                   ),
                 ),
               ),
-              color: Colors.green[900],
+              color: Colors.blueGrey,
+              splashColor: Colors.cyan,
               padding:
                   EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
               onPressed: () => yesOrNo(true),
@@ -98,7 +97,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
             text: leaveButtonText,
             style: TextStyle(
               fontSize: 15.0,
-              color: Colors.black,
+              color: Colors.white,
               letterSpacing: 1.0,
               height: 1.5,
             ),
@@ -118,13 +117,14 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   text: "No",
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     letterSpacing: 1.0,
                     height: 1.5,
                   ),
                 ),
               ),
-              color: Colors.red[900],
+              splashColor: Colors.cyan,
+              color: Colors.blueGrey,
               padding:
                   EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
               onPressed: () => yesOrNo(false),
@@ -142,10 +142,10 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
         itemCount: globals.djSonglist.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
-            shape: Border(bottom: BorderSide(color: Colors.red[900])),
+            shape: Border(bottom: BorderSide(color: Colors.cyan)),
             child: new Container(
               width: cWidth,
-              color: Colors.green[200],
+              color: Colors.white12,
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -194,7 +194,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                         ),
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                     onPressed: () => selectMe(index),
@@ -211,10 +211,10 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
         itemCount: globals.userSearchSongs.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
-            shape: Border(bottom: BorderSide(color: Colors.red[900])),
+            shape: Border(bottom: BorderSide(color: Colors.cyan)),
             child: new Container(
               width: cWidth,
-              color: Colors.green[200],
+              color: Colors.white,
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -263,7 +263,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                         ),
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                     onPressed: () => selectMe(globals.djIndex[index]),
@@ -285,6 +285,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     // to help with text wrapping if the song title is too long
     return new Scaffold(
         appBar: AppBar(
+            backgroundColor: Colors.black,
             centerTitle: true,
             title: appBarTitle,
             automaticallyImplyLeading: false,
@@ -299,13 +300,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                       this.actionIcon = new Icon(Icons.close);
                       this.appBarTitle = new TextField(
                         style: new TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         decoration: new InputDecoration(
                             prefixIcon:
-                                new Icon(Icons.search, color: Colors.black),
+                                new Icon(Icons.search, color: Colors.white),
                             hintText: "Enter Search Here",
-                            hintStyle: new TextStyle(color: Colors.black26)),
+                            hintStyle: new TextStyle(color: Colors.white30)),
                         maxLength: 12,
                         onSubmitted: (String findMe) {
                           print(findMe);
