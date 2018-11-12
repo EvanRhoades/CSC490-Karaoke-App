@@ -38,7 +38,7 @@ and open the template in the editor.
     <body class = "body">
          <script>
             function testserver(){
-                $.post("ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList", "test")
+                $.post("http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/songList", "test")
             }
         </script>
         <script>
@@ -80,11 +80,11 @@ and open the template in the editor.
             <script>
                 $(document).ready(function(){
                     $("button").click(function(){
-                        $.post("ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList",
+                        $.post("http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/songList",
                         {
-                          Artist: "Donald Duck",
-                          Title: "Duckburg",
-                          dj_id: 19
+                          Artist: "Weird Al",
+                          Title: "A New Duck",
+                          dj_id: "99"
                         },
                         function(data,status){
                             alert("Data: " + data + "\nStatus: " + status);
