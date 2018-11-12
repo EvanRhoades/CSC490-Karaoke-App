@@ -10,9 +10,8 @@ const cors = require('cors');
 //Set Request Route
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
-const memberRoutes = require ('./api/routes/membership');
 
-//CORS Allowance
+//CORS Handling
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -33,7 +32,6 @@ app.use(express.static('CSC490Website/public_html'));
 //Intializes the URIs
 app.use('/songList', songRoutes);
 app.use('/userList', userRoutes);
-app.use ('/membership', memberRoutes);
 
 //Returns error statuses when routes not reached correctly
 app.use((req, res, next) => {
