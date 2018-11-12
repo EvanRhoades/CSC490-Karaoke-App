@@ -11,7 +11,7 @@ const cors = require('cors');
 const songRoutes = require('./api/routes/songList');
 const userRoutes = require('./api/routes/userList');
 
-//CORS Handling
+//CORS Handling for AWS
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
