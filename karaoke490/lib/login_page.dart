@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'create_account_page.dart';
 import 'join_or_create.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -45,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
            can just return the username once you finish the validation.
        variables: _email, _password, _validated */
     var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
-    http.post(url, body: {"email":_emailC,"password":_passwordC).then((response){
+    http.post(url, body: {"email":_email,"password":_password}).then((response){
       print("Response from attempting to log in");
       print("Response status: ${response.statusCode}");
       print("Response body: ${response.body}");
@@ -61,10 +63,10 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-    // DELETE IN THE FUTURE
-    // (the following line of code is for my own testing purposes)
-    //_validated = true; commented out by Sean
-
+//     DELETE IN THE FUTURE
+//     (the following line of code is for my own testing purposes)
+//    _validated = true; commented out by Sean
+    _validated = true;
     if (_validated)
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
   }

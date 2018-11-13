@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'choose_song_page.dart';
 import 'globals.dart' as globals;
 import 'queue_dj_page.dart';
+import 'login_page.dart';
 
 class JoinOrCreatePage extends StatefulWidget {
   @override
@@ -13,9 +14,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   final formKey3 = new GlobalKey<FormState>();
   String _eventCodeUser;
 
-
   _JoinOrCreatePageState() {
-
     // SEAN: INSERT CODE HERE
     // check if this user is a DJ or not
     // we should get this value when the user logs in
@@ -68,6 +67,124 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     }
   }
 
+  Color backColor = Colors.white;
+  bool yesNoVisible = false;
+  IconData beginIcon = Icons.close;
+  bool userLeaving = false;
+  String leaveButtonText = "Logout";
+  Color beginColor = Colors.black;
+  // if participant is trying to finish event, display "Yes" and "no" buttons
+  void yesOrNo(bool yesNo) {
+    // if yes, exit event
+    if (yesNo) {
+      Navigator.push(context,
+          new MaterialPageRoute(builder: (context) => new LoginPage()));
+    }
+    // if no, go back to previous state
+    else {
+      userLeaving = false;
+      backColor = Colors.white;
+      leaveButtonText = "Logout";
+      beginIcon = Icons.close;
+      yesNoVisible = false;
+      setState(() {});
+    }
+  }
+
+  void dblCheckLeave() {
+    // If participant wants to leave...
+    if (!userLeaving) {
+      userLeaving = true;
+      backColor = Colors.white;
+      leaveButtonText = "Are you sure?";
+      beginIcon = Icons.warning;
+      yesNoVisible = true;
+      setState(() {});
+    }
+  }
+
+  Row exitButton() {
+    return new Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+        Widget>[
+      yesNoVisible
+          ? new RaisedButton(
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        child: new RichText(
+          text: new TextSpan(
+            text: "Yes",
+            style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white,
+              letterSpacing: 1.0,
+              height: 1.5,
+            ),
+          ),
+        ),
+        color: Colors.blueGrey,
+        splashColor: Colors.cyan,
+        padding:
+        EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+        onPressed: () => yesOrNo(true),
+      )
+          : new Text(""),
+      new Icon(beginIcon),
+      // begins the event
+      new RaisedButton(
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        child: new RichText(
+          text: new TextSpan(
+            text: leaveButtonText,
+            style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white,
+              letterSpacing: 1.0,
+              height: 1.5,
+            ),
+          ),
+        ),
+        color: beginColor,
+        padding: EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+        onPressed: dblCheckLeave,
+      ),
+      new Icon(beginIcon),
+      yesNoVisible
+          ? new RaisedButton(
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        child: new RichText(
+          text: new TextSpan(
+            text: "No",
+            style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white,
+              letterSpacing: 1.0,
+              height: 1.5,
+            ),
+          ),
+        ),
+        splashColor: Colors.cyan,
+        color: Colors.blueGrey,
+        padding:
+        EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+        onPressed: () => yesOrNo(false),
+      )
+          : new Text(""),
+    ]);
+  }
+
+  void _logout() {
+    /*
+      SEAN:
+      I'm assuming the server will keep track of who is logged in or not.  If so,
+      this would be the time to let the server know that the user is logging out.
+     */
+
+    Navigator.push(context,
+        new MaterialPageRoute(builder: (context) => new LoginPage()));
+  }
+
   IconData whichIcon() {
     IconData lockOrUnlock;
 
@@ -81,92 +198,94 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        key: scaffoldKey3,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          title: new Text("Join or Create Event"),
-          automaticallyImplyLeading: false,
-        ),
-        backgroundColor: Colors.white,
-        body: new ListView(children: <Widget>[
-          new Container(
-            alignment: Alignment.center,
-            child: new RichText(
-              text: new TextSpan(
-                text: 'Happy Funtime Karaoke',
-                style: TextStyle(
-                  fontSize: 25.0,
-                  color: Colors.cyan,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 3.0,
-                  height: 4.0,
-                ),
+      key: scaffoldKey3,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: new Text("Join or Create Event"),
+        automaticallyImplyLeading: false,
+      ),
+      backgroundColor: Colors.white,
+      bottomNavigationBar: exitButton(),
+      body: new ListView(children: <Widget>[
+        new Container(
+          alignment: Alignment.center,
+          child: new RichText(
+            text: new TextSpan(
+              text: 'Happy Funtime Karaoke',
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.cyan,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 3.0,
+                height: 4.0,
               ),
             ),
           ),
-          new Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
-            child: new Form(
-                key: formKey3,
-                child: new Column(children: <Widget>[
-                  new TextFormField(
-                    decoration: new InputDecoration(labelText: "Event Code"),
-                    style: TextStyle(color: Colors.black),
-                    // validates email input; val = user input
-                    validator: (val) => val.length < 6
-                        ? 'Event code should be 6 characters'
-                        : null,
-                    // assigns user input to appropriate variable
-                    onSaved: (val) => _eventCodeUser = val,
-                  ),
-                  new Padding(
-                    padding: const EdgeInsets.all(5.0),
-                  ),
-                  new RaisedButton(
-                    child: new RichText(
-                      text: new TextSpan(
-                        text: 'Join Event',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.black,
-                          letterSpacing: 1.0,
-                          height: 1.5,
-                        ),
+        ),
+        new Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
+          child: new Form(
+              key: formKey3,
+              child: new Column(children: <Widget>[
+                new TextFormField(
+                  decoration: new InputDecoration(labelText: "Event Code"),
+                  style: TextStyle(color: Colors.black),
+                  // validates email input; val = user input
+                  validator: (val) => val.length < 6
+                      ? 'Event code should be 6 characters'
+                      : null,
+                  // assigns user input to appropriate variable
+                  onSaved: (val) => _eventCodeUser = val,
+                ),
+                new Padding(
+                  padding: const EdgeInsets.all(5.0),
+                ),
+                new RaisedButton(
+                  child: new RichText(
+                    text: new TextSpan(
+                      text: 'Join Event',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                        letterSpacing: 1.0,
+                        height: 1.5,
                       ),
                     ),
-                    color: Colors.cyan,
-                    padding: EdgeInsets.only(
-                        left: 8.0, right: 8.0, bottom: 8.0, top: 2.0),
-                    onPressed: _routeJoin,
                   ),
-                ])),
-          ),
-          new Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-          ),
-          new Icon(whichIcon()),
-          new Container(
-            alignment: Alignment.center,
-            child: new RaisedButton(
-              child: new RichText(
-                text: new TextSpan(
-                  text: 'Create Event',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.black,
-                    letterSpacing: 1.0,
-                    height: 1.5,
-                  ),
+                  color: Colors.cyan,
+                  padding: EdgeInsets.only(
+                      left: 8.0, right: 8.0, bottom: 8.0, top: 2.0),
+                  onPressed: _routeJoin,
+                ),
+              ])),
+        ),
+        new Padding(
+          padding: const EdgeInsets.only(top: 50.0),
+        ),
+        new Icon(whichIcon()),
+        new Container(
+          alignment: Alignment.center,
+          child: new RaisedButton(
+            child: new RichText(
+              text: new TextSpan(
+                text: 'Create Event',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  letterSpacing: 1.0,
+                  height: 1.5,
                 ),
               ),
-              color: _buttonColor(),
-              padding:
-                  EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0, top: 2.0),
-              onPressed: _createEvent,
             ),
+            color: _buttonColor(),
+            padding:
+                EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0, top: 2.0),
+            onPressed: _createEvent,
           ),
-        ]));
+        ),
+      ]),
+    );
   }
 }
