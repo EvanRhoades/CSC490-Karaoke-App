@@ -65,6 +65,7 @@ class _CreatePageState extends State<CreatePage> {
         title: new Text("Create Account"),
       ),
       backgroundColor: Colors.white,
+      // widget that contains pretty much everything on this page
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,

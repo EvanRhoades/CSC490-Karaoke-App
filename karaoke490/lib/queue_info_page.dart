@@ -8,9 +8,17 @@ class QueueInfoPage extends StatefulWidget {
 }
 
 class _QueueInfoPageState extends State<QueueInfoPage> {
+  // the purpose of these keys are to reference the corresponding widgets
+  final scaffoldKey4 = new GlobalKey<ScaffoldState>();
+
+  // simple boolean switch for when the event starts
   bool eventOngoing = false;
+
+  // this color will change for the participant currently singing
   Color currSing = Colors.white;
 
+  // simply changes the color in the karaoke queue to indicate which participant
+  // is currently singing
   Color currentlySinging(int index) {
     if (eventOngoing) {
       if (index == 0) {
@@ -22,6 +30,22 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
     return currSing;
   }
 
+  /*
+    SEAN:
+    The following method indicates to the user that the event has begun.  Whenever the
+    server communicates this information to the user, use this method.
+  */
+  void eventHasBegun(){
+    eventOngoing = true;
+    final snackbar = new SnackBar(
+      content: new Text("Event has begun!"),
+    );
+    scaffoldKey4.currentState.showSnackBar(snackbar);
+    setState(() {
+    });
+  }
+
+  // this variables all need to change when the user presses the "leave event" button
   bool yesNoVisible = false;
   Color leaveColor;
   String leaveButtonText = "Leave Event";
@@ -48,6 +72,11 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
     }
     // if no, go back to previous state
     else {
+      eventHasBegun();
+      leaveColor = Colors.white;
+      leaveButtonText = "Leave Event";
+      leaveIcon = Icons.close;
+      yesNoVisible = false;
       setState(() {});
     }
   }
@@ -62,10 +91,12 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
     int queuePlace;
 
     return new Scaffold(
+        key: scaffoldKey4,
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
           title: new Text("Queue Info"),
+          // removes default back button within appbar
           automaticallyImplyLeading: false,
         ),
         backgroundColor: Colors.white,
@@ -145,6 +176,7 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  // if the user has tried to leave event, display this button
                   yesNoVisible
                       ? new RaisedButton(
                     shape: new RoundedRectangleBorder(
@@ -164,11 +196,13 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
                     color: Colors.blueGrey,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+                    // if they press this button ("yes"), continue with leave event process
                     onPressed: () => yesOrNo(true),
                   )
                       : new Text(""),
                   new Icon(leaveIcon),
-                  // begins the event
+                  // "leave event" button
+                  // changes to "are you sure?" when pressed (not a usable button in that state)
                   new RaisedButton(
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
@@ -190,6 +224,7 @@ class _QueueInfoPageState extends State<QueueInfoPage> {
                     onPressed: leaveEvent,
                   ),
                   new Icon(leaveIcon),
+                  // if user changes their mind and presses "no", go back to previous state
                   yesNoVisible
                       ? new RaisedButton(
                     shape: new RoundedRectangleBorder(

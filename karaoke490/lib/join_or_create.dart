@@ -14,17 +14,6 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
   final formKey3 = new GlobalKey<FormState>();
   String _eventCodeUser;
 
-  _JoinOrCreatePageState() {
-    // SEAN: INSERT CODE HERE
-    // check if this user is a DJ or not
-    // we should get this value when the user logs in
-
-    //NO CODE NEEDS TO BE DONE HERE BECAUSE THE DJ ID IS RETRIEVED UPON LOGIN
-
-    // this is how you access the global variables from "globals.dart"
-    // globals.isDJ = true;
-  }
-
   // adjust color of button depending on whether or not the user is a DJ
   Color _buttonColor() {
     if (globals.isDJ)
@@ -35,20 +24,42 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
 
   // what happens when the user clicks "Join Karaoke Event"
   void _routeJoin() {
+
     // first we grab the formKey as it currently stands
     final form = formKey3.currentState;
 
     // I set this to true to test the routing, this should normally be initialized to false
     bool eventCodeExists = true;
     // SEAN: INSERT CODE HERE
-    // check if this event code exists
+    // 1. check if this event code exists
 
-    // if the input is syntactically valid, we save it
+
+    // if the input is syntactically valid, we save it and move to the next page
     if (form.validate() && eventCodeExists) {
       form.save();
 
+      /*
+         SEAN:
+         This is when we pull the event data & songlist
+         Variables:
+          Songlist Stuff:
+            a) globals.djSonglist
+            b) globals.djArtistlist
+          Event Queue Stuff:
+            a) globals.participantList
+            b) globals.participantSongs
+      */
+
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => new ChooseSongPage()));
+    }
+    // if not, let the user know
+    else{
+      final snackbar2 = new SnackBar(
+        content:
+        new Text("Invalid event code."),
+      );
+      scaffoldKey3.currentState.showSnackBar(snackbar2);
     }
   }
 
@@ -57,6 +68,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     if (globals.isDJ)
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => new QueueDjPage()));
+    // if the user is not a DJ, let them know that they cannot create an event
     else {
       final snackbar = new SnackBar(
         content:
@@ -67,16 +79,25 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     }
   }
 
+  // these variables exist to adjust the visual display of the logout button when pressed
   Color backColor = Colors.white;
   bool yesNoVisible = false;
   IconData beginIcon = Icons.close;
   bool userLeaving = false;
   String leaveButtonText = "Logout";
   Color beginColor = Colors.black;
-  // if participant is trying to finish event, display "Yes" and "no" buttons
+
+  // if participant is trying to logout, display "Yes" and "no" buttons
   void yesOrNo(bool yesNo) {
-    // if yes, exit event
+    // if yes, logout
     if (yesNo) {
+      /*
+        SEAN:
+        So at this point the user wants to logout.  At this point, the user would not
+        be in an event or be managing an event, but maybe the server needs to know
+        if a user logs out...?  I'm not sure.
+       */
+
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => new LoginPage()));
     }
@@ -103,9 +124,12 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     }
   }
 
+  // when user presses "logout", this method is used to help facilitate the button changes
+  // for transitioning to "are you sure?"
   Row exitButton() {
     return new Row(mainAxisAlignment: MainAxisAlignment.center, children: <
         Widget>[
+          // if the user has tried to logout, display this button
       yesNoVisible
           ? new RaisedButton(
         shape: new RoundedRectangleBorder(
@@ -125,11 +149,12 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
         splashColor: Colors.cyan,
         padding:
         EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+        // if they press this button ("yes"), continue with logout process
         onPressed: () => yesOrNo(true),
       )
           : new Text(""),
       new Icon(beginIcon),
-      // begins the event
+      // this "button" really just displays "are you sure?"
       new RaisedButton(
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
@@ -149,6 +174,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
         onPressed: dblCheckLeave,
       ),
       new Icon(beginIcon),
+      // if user changes their mind and presses "no", go back to previous state
       yesNoVisible
           ? new RaisedButton(
         shape: new RoundedRectangleBorder(
@@ -174,17 +200,8 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     ]);
   }
 
-  void _logout() {
-    /*
-      SEAN:
-      I'm assuming the server will keep track of who is logged in or not.  If so,
-      this would be the time to let the server know that the user is logging out.
-     */
-
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => new LoginPage()));
-  }
-
+  // the icon that is displayed above "create event" button
+  // it changes depending on whether or not the user is a DJ
   IconData whichIcon() {
     IconData lockOrUnlock;
 
@@ -207,7 +224,9 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
       ),
       backgroundColor: Colors.white,
       bottomNavigationBar: exitButton(),
+      // this is the widget where everything on this page is displayed (more or less)
       body: new ListView(children: <Widget>[
+        // text containing app name
         new Container(
           alignment: Alignment.center,
           child: new RichText(
@@ -223,6 +242,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
             ),
           ),
         ),
+        // event code form and button that goes with it
         new Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
@@ -234,7 +254,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
                   style: TextStyle(color: Colors.black),
                   // validates email input; val = user input
                   validator: (val) => val.length < 6
-                      ? 'Event code should be 6 characters'
+                      ? 'Event code should be 6 digits'
                       : null,
                   // assigns user input to appropriate variable
                   onSaved: (val) => _eventCodeUser = val,
@@ -265,6 +285,7 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
           padding: const EdgeInsets.only(top: 50.0),
         ),
         new Icon(whichIcon()),
+        // create event button
         new Container(
           alignment: Alignment.center,
           child: new RaisedButton(
