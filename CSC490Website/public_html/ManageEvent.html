@@ -61,8 +61,8 @@ and open the template in the editor.
         </div>
         <div class="w3-cell-row">
             <script>
-                var y = document.getElementById("queue").length; 
-                    document.getElementById("counter").innerHTML = y;
+                var y = document.getElementById("queue").length;
+                document.getElementById("counter").innerHTML = y;
             </script>
             <div class="w3-container w3-cell" style="width:45%" >
                 <p class="pcenter">There Are: </p>
@@ -73,21 +73,53 @@ and open the template in the editor.
 
             <div class="w3-container w3-cell">
                 <p>Singers Queue</p>
-                    <select id="queue" class="queue" size="10" name="singers">
-                    </select> 
+                <select id="queue" class="queue" size="10" name="singers">
+                </select> 
 
-<button type="button" onclick="myFunction()">Insert option</button>
+                <button type="button" onclick="myFunction()">Insert option</button>
+                <br>
+  <button onclick="listboxMove('lst', 'up');">Move Up</button>
+  <button onclick="listboxMove('lst', 'down');">Move Down</button>
+  
+    <script>
+    function listboxMove(listID, direction) {
+      var listbox = document.getElementById("queue");
+      var selIndex = listbox.selectedIndex;
+      if (-1 == selIndex) {
+        alert("Please select an option to move.");
+        return;
+      }
+      var increment = -1;
+      if (direction == 'up')
+        increment = -1;
+      else
+        increment = 1;
+      if ((selIndex + increment) < 0 ||
+        (selIndex + increment) > (listbox.options.length - 1)) {
+        return;
+      }
+      var selValue = listbox.options[selIndex].value;
+      var selText = listbox.options[selIndex].text;
+      listbox.options[selIndex].value = listbox.options[selIndex + increment].value
+      listbox.options[selIndex].text = listbox.options[selIndex + increment].text
+      listbox.options[selIndex + increment].value = selValue;
+      listbox.options[selIndex + increment].text = selText;
+      listbox.selectedIndex = selIndex + increment;
+    }
+  </script>
 
-<script>
-function myFunction() {
-    var x = document.getElementById("queue");
-    var option = document.createElement("option");
-    option.text = "Kiwi";
-    x.add(option);
-                        var y = document.getElementById("queue").length; 
-                    document.getElementById("counter").innerHTML = y;
-}
-</script>
+                <script>
+                    function myFunction() {
+                        var x = document.getElementById("queue");
+                        var z = 0;
+                        z = z + 1;
+                        var option = document.createElement("option");
+                        option.text = "Kiwi" + z;
+                        x.add(option);
+                        var y = document.getElementById("queue").length;
+                        document.getElementById("counter").innerHTML = y;
+                    }
+                </script>
             </div>
         </div>
     </body>
