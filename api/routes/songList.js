@@ -22,9 +22,8 @@ var Song = connection.define('songtest', {
 
 /*Handles finding all songs under a DJ's ID and then returns them as a JSON file 
 Uses POST instead of GET because it can take parameters in a much more effeceint fashion
-@params JSON dj_id
-@returns JSON on true
-@returns 0 on false
+@params Int dj_id
+@returns Array of JSONs
 */
 router.post ('/event', (req, res, next) => {
     if(parseInt(req.body.dj_id) > 0){
@@ -33,7 +32,7 @@ router.post ('/event', (req, res, next) => {
             res.status(200).json({                
                 listing: list
             })
-            
+            return list;
         })
     } else {
         res.status(404).json({
@@ -43,9 +42,21 @@ router.post ('/event', (req, res, next) => {
     }
 });
 
+/*Sends a Response to the server containing the song from the app.
+@params String Artist
+@params String Title
+@returns JSON
+ */
+router.post ('/queue', (req, res, next) => {
+    res.status(200).json({
+        Artist: req.body.Artist,
+        Title: req.body.Title
+    })
+});
 /*Handles inserting songs into the DB via POST
 Has the songs passed one at a time so it can parse the dj_id
-@params JSON title: artist: dj_id:
+@params String title: 
+@params Int artist: dj_id:
 @returns HTTP status
 */
 router.post ('/', (req, res, next) => {   
