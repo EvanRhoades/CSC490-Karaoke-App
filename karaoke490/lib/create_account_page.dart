@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class CreatePage extends StatefulWidget {
   @override
@@ -63,6 +65,7 @@ class _CreatePageState extends State<CreatePage> {
         title: new Text("Create Account"),
       ),
       backgroundColor: Colors.white,
+      // widget that contains pretty much everything on this page
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,
@@ -149,7 +152,7 @@ class _CreatePageState extends State<CreatePage> {
                   ),
                   new RaisedButton(
                     child: new Text("Create Account"),
-                    color: Colors.white,
+                    color: Colors.cyan,
                     onPressed: _doThis,
                   )
                 ],

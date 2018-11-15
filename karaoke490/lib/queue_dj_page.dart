@@ -166,6 +166,10 @@ class _QueueDjPageState extends State<QueueDjPage>
     }
   }
 
+  /*
+      adjusts color of currently singing participant in queue, only activates
+      if the event has begun
+   */
   Color currentlySinging(int index) {
     if (eventOngoing) {
       if (index == 0) {
@@ -180,6 +184,7 @@ class _QueueDjPageState extends State<QueueDjPage>
     return editColor2;
   }
 
+  // deletes the top participant from the queue, moves everyone else up one.
   void nextUp(){
     if (globals.participantList.length == 0) {
       setState(() {});
@@ -332,6 +337,7 @@ class _QueueDjPageState extends State<QueueDjPage>
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  // if the user has tried to leave event, display this button
                   yesNoVisible
                       ? new RaisedButton(
                           shape: new RoundedRectangleBorder(
@@ -355,7 +361,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                         )
                       : new Text(""),
                   new Icon(beginIcon),
-                  // begins the event
+                  // begins the event (changes to "finish event" and then "are you sure?)
                   new RaisedButton(
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
@@ -376,6 +382,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                     onPressed: beginEvent,
                   ),
                   new Icon(beginIcon),
+                  // if user changes their mind and presses "no", go back to previous state
                   yesNoVisible
                       ? new RaisedButton(
                           shape: new RoundedRectangleBorder(
