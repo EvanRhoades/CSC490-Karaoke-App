@@ -30,7 +30,7 @@
             }            
         </style>
     </head>
-    
+
     <body class="body">
         <div class ="navbar">
             <a href="Index.html">Main</a>
@@ -40,54 +40,92 @@
             <a href="UploadSongs.html">Upload Songs</a>
             <a href="#" class="right">About</a>
         </div>
-        <center>
-            <h3>Register</h3>
-            
-            <form action ="register" method="post">
-                
-                <table>
-                    <tr>
-                        <td>Username:</td>
-                        <td>
-                            <input type="text" name="user" placeholder="Enter Username" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Email:</td>
-                        <td>
-                            <input type="text" name="email" placeholder="Enter Email" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Password:</td>
-                        <td>
-                            <input type="password" name="pass" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Re-enter Password:</td>
-                        <td>
-                            <input type="password" name="pass" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <input type="submit" name="submit" value="Login">
-                        </td>
-                        <td>
-                            Already a member?<a href="Login.html">Login</a>
-                        </td>
-                    </tr>
-                    
-                </table>
-                
-            </form>
-        </center>
-    
-    </body>
+    <center>
+        <h3>Register</h3>
+
+        <form action ="register" method="post">
+
+            <table>
+
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        <input type="text" name="email" placeholder="Enter Email" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>First Name:</td>
+                    <td>
+                        <input type="text" name="FName" placeholder="Enter First Name" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Last Name:</td>
+                    <td>
+                        <input type="text" name="LName" placeholder="Enter Last Name" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <input type="text" name="user" placeholder="Enter Username" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+                    <td>
+                        <input type="password" name="pass" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Re-enter Password:</td>
+                    <td>
+                        <input type="password" name="repass" placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and a minimum of 8 characters" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <script>
+                            $(document).ready(function () {
+                                $("button").click(function () {
+                                    email = document.getElementById("email");
+                                    username = document.getElementById("user");
+                                    fname = document.getElementById("FName");
+                                    lname = document.getElementById("LName");
+                                    password = document.getElementById("pass");
+                                    repassword = document.getElementById("repass");
+                                    if (password == repassword) {
+                                        $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/",
+                                                {
+                                                    email: email,
+                                                    username: username,
+                                                    firstname: fname,
+                                                    lastname: lname,
+                                                    password: password,
+                                                    dj_id: 1
+                                                });
+                                    }
+                                });
+                            });
+                        </script>
+                        <button>Create Account</button>
+                    </td>
+                    <td>
+                        Already a member? <a href="Login.html">Login</a>
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+    </center>
+
+</body>
 
 </html>

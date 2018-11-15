@@ -38,7 +38,7 @@ and open the template in the editor.
     <body class = "body">
          <script>
             function testserver(){
-                $.post(ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList/, "test")
+                $.post("http://ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList/", "test")
             }
         </script>
         <script>
@@ -49,10 +49,9 @@ and open the template in the editor.
         </script>
         <script>    
             function showDiv() {
-                //sessionStorage.clear();
-                //sessionStorage.setItem("ID", NULL);
+                var x = document.getElementById('csvFileInput');
+                sessionStorage.setItem('file', x);
                 var id = 1; //for now id is hard coded but in future will check the id of who is logged in to see if they are a dj
-                //id = sessionStorage.getItem("ID");
                 if (id >= 1) {
                     document.getElementById('upload').style.display = "block";
                 }
@@ -74,20 +73,17 @@ and open the template in the editor.
         </div>
         <input type="button" value="Upload Songlist" onclick="showDiv()" />
         <div id="upload"  style="display:none" >
-            <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
-          accept=".csv">
+            <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script>
                 $(document).ready(function(){
                     $("button").click(function(){
+                        sessionStorage.setItem('test', 1);
                         $.post("ec-2-18-206-245-108.compute-1.amazonaws.com:3000/songList",
                         {
                           Artist: "Donald Duck",
                           Title: "Duckburg",
                           dj_id: 19
-                        },
-                        function(data,status){
-                            alert("Data: " + data + "\nStatus: " + status);
                         });
                     });
                 });
