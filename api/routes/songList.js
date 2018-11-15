@@ -65,20 +65,53 @@ router.post ('/', (req, res, next) => {
         force: false
     })
     .then(() => {
+        var Array = req.body;
+        Array.forEach(myFunction);
+
+        function myFunction (value, index, array) {
         Song.create({
+            Artist: value.Artist,
+            Title: value.Title,
+            dj_id: parseInt(value.dj_id),
+            loweredArtist: value.Artist.toLowerCase(),
+            loweredTitle: value.Title.toLowerCase(),    
+        })
+    
+
+    //res.status(201).json({
+    //    artist: value.Artist,
+     //   title: value.Title
+    //});
+}
+res.status(200).json({
+    message: "Songs uploaded"
+});
+}) 
+});
+
+/*Deletes a spng from the database according to title, artist, and dj_id
+@params String Artist
+@params String Title
+@params Int dj_id
+@returns HTTP response
+ */
+router.delete ('/', (req, res, next) => {
+    connection.sync ({
+        force: false
+    })
+    .then(() => {
+        Song.destroy({
             Artist: req.body.Artist,
             Title: req.body.Title,
-            dj_id: parseInt(req.body.dj_id),
-            loweredArtist: req.body.Artist.toLowerCase(),
-            loweredTitle: req.body.Title.toLowerCase()        
+            dj_id: parseInt(req.body.dj_id) 
         })
     })
 
     res.status(201).json({
+        message: "This song was deleted",
         artist: req.body.Artist,
         title: req.body.Title
     });
-    
 });
 
 module.exports = router;
