@@ -42,7 +42,7 @@ and open the template in the editor.
                 line-height: 100px;
             }
             .queue{
-                width: auto;
+                width: 100%;
             }
             option{
                 font-size: 30px;
@@ -60,25 +60,34 @@ and open the template in the editor.
             <a href="#" class="right">About</a>
         </div>
         <div class="w3-cell-row">
-            <div class="w3-container w3-cell  w3-border-black" style="width:45%" >
+            <script>
+                var y = document.getElementById("queue").length; 
+                    document.getElementById("counter").innerHTML = y;
+            </script>
+            <div class="w3-container w3-cell" style="width:45%" >
                 <p class="pcenter">There Are: </p>
-                <p class="pcenter" id="counter"></p>
-                <p class="pcenter">In The Queue.</p>
-                <script>
-                    document.getElementById("counter").innerHTML = "New text!";
-                </script>
+                <p class="pcenter" id="counter">0</p>
+                <p class="pcenter">Singers In The Queue.</p>
+
             </div>
 
-            <div class="w3-container w3-cell w3-border-black">
+            <div class="w3-container w3-cell">
                 <p>Singers Queue</p>
-                    <select class="queue" size="10" name="singers">
-                        <option>Plan 1
-                        <option>Plan 2
-                        <option>Plan 3
-                        <option>Plan 4
-                        <option>Plan 5
+                    <select id="queue" class="queue" size="10" name="singers">
                     </select> 
 
+<button type="button" onclick="myFunction()">Insert option</button>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("queue");
+    var option = document.createElement("option");
+    option.text = "Kiwi";
+    x.add(option);
+                        var y = document.getElementById("queue").length; 
+                    document.getElementById("counter").innerHTML = y;
+}
+</script>
             </div>
         </div>
     </body>
