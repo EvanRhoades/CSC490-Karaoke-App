@@ -1,3 +1,4 @@
+//
 import 'package:flutter/material.dart';
 import 'globals.dart' as globals;
 import 'join_or_create.dart';
@@ -11,7 +12,7 @@ class _QueueDjPageState extends State<QueueDjPage>
     with SingleTickerProviderStateMixin {
   // sets background color for this page
   // this will only change when the dj is trying to exit
-  Color backColor = Colors.green[200];
+  Color backColor = Colors.white;
 
   // up and down icons that appear when editing the queue
   Icon upIcon = new Icon(Icons.arrow_upward);
@@ -55,7 +56,8 @@ class _QueueDjPageState extends State<QueueDjPage>
       );
   }
 
-  // this is the "up button" for moving a participant up in the queue; it will only appear when the user presses "edit"
+  // this is the "up button" for moving a participant up in the queue;
+  // it will only appear when the user presses "edit"
   IconButton downButton(int ind) {
     if (editSwitch == true) {
       return new IconButton(
@@ -86,8 +88,8 @@ class _QueueDjPageState extends State<QueueDjPage>
 
   // edit queue button changes when pressed; these help facilitate those changes
   String editButtonText = "Edit Queue";
-  Color editColor = Colors.amber;
-  Color editColor2 = Colors.amber;
+  Color editColor = Colors.cyan;
+  Color editColor2 = Colors.cyan;
 
   // simply flips the switch to allow the dj to edit the queue
   void editQueue() {
@@ -103,8 +105,8 @@ class _QueueDjPageState extends State<QueueDjPage>
     else {
       editSwitch = false;
       editButtonText = "Edit Queue";
-      editColor = Colors.amber;
-      editColor2 = Colors.green[200];
+      editColor = Colors.cyan;
+      editColor2 = Colors.teal[200];
       /*
         SEAN: At this point in time, the queue edit has been saved and
         should be communicated to the other participants
@@ -117,14 +119,16 @@ class _QueueDjPageState extends State<QueueDjPage>
   IconData beginIcon = Icons.audiotrack;
   bool eventOngoing = false;
   String beginButtonText = "Begin Event";
-  Color beginColor = Colors.amber;
+  Color beginColor = Colors.cyan;
+  Color beginButtonTextColor = Colors.black;
 
   // begins the event,
   void beginEvent() {
     // if event has not begun yet, begin it
     if (!eventOngoing) {
       beginButtonText = "Conclude Event";
-      beginColor = Colors.red[900];
+      beginColor = Colors.black;
+      beginButtonTextColor = Colors.white;
       beginIcon = Icons.close;
       eventOngoing = true;
       setState(() {});
@@ -133,7 +137,8 @@ class _QueueDjPageState extends State<QueueDjPage>
     else {
       backColor = Colors.white;
       beginButtonText = "Are you sure?";
-      beginColor = Colors.white;
+      beginButtonTextColor = Colors.white;
+      beginColor = Colors.black;
       beginIcon = Icons.warning;
       yesNoVisible = true;
       setState(() {});
@@ -153,15 +158,18 @@ class _QueueDjPageState extends State<QueueDjPage>
     }
     // if no, go back to previous state
     else {
-      backColor = Colors.green[200];
       beginButtonText = "Conclude Event";
-      beginColor = Colors.red[900];
+      beginColor = Colors.black;
       beginIcon = Icons.close;
       yesNoVisible = false;
       setState(() {});
     }
   }
 
+  /*
+      adjusts color of currently singing participant in queue, only activates
+      if the event has begun
+   */
   Color currentlySinging(int index) {
     if (eventOngoing) {
       if (index == 0) {
@@ -172,10 +180,11 @@ class _QueueDjPageState extends State<QueueDjPage>
     if (editSwitch)
       editColor2 = Colors.teal;
     else
-      editColor2 = Colors.amber;
+      editColor2 = Colors.white12;
     return editColor2;
   }
 
+  // deletes the top participant from the queue, moves everyone else up one.
   void nextUp(){
     if (globals.participantList.length == 0) {
       setState(() {});
@@ -197,6 +206,7 @@ class _QueueDjPageState extends State<QueueDjPage>
 
     return new Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.black,
           centerTitle: true,
           title: new Text("Event Management"),
           automaticallyImplyLeading: false,
@@ -212,7 +222,7 @@ class _QueueDjPageState extends State<QueueDjPage>
               itemBuilder: (BuildContext context, int index) {
                 queuePlace = index + 1;
                 return new Card(
-                  shape: Border(bottom: BorderSide(color: Colors.red[900])),
+                  shape: Border(bottom: BorderSide(color: Colors.cyan)),
                   child: new Container(
                     width: cWidth,
                     color: currentlySinging(index),
@@ -224,7 +234,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                             text: '$queuePlace',
                             style: TextStyle(
                               fontSize: 15.0,
-                              color: Colors.black,
+                              color: Colors.cyan,
                               letterSpacing: 1.0,
                               height: 1.0,
                             ),
@@ -313,7 +323,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                       ),
                     ),
                   ),
-                  color: Colors.amber,
+                  color: Colors.cyan,
                   shape: RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.all(Radius.elliptical(6.0, 6.0))),
@@ -327,6 +337,7 @@ class _QueueDjPageState extends State<QueueDjPage>
             new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  // if the user has tried to leave event, display this button
                   yesNoVisible
                       ? new RaisedButton(
                           shape: new RoundedRectangleBorder(
@@ -336,20 +347,21 @@ class _QueueDjPageState extends State<QueueDjPage>
                               text: "Yes",
                               style: TextStyle(
                                 fontSize: 15.0,
-                                color: Colors.black,
+                                color: Colors.white,
                                 letterSpacing: 1.0,
                                 height: 1.5,
                               ),
                             ),
                           ),
-                          color: Colors.green[900],
+                          splashColor: Colors.cyan,
+                          color: Colors.blueGrey,
                           padding: EdgeInsets.only(
                               left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                           onPressed: () => yesOrNo(true),
                         )
                       : new Text(""),
                   new Icon(beginIcon),
-                  // begins the event
+                  // begins the event (changes to "finish event" and then "are you sure?)
                   new RaisedButton(
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
@@ -358,7 +370,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                         text: beginButtonText,
                         style: TextStyle(
                           fontSize: 15.0,
-                          color: Colors.black,
+                          color: beginButtonTextColor,
                           letterSpacing: 1.0,
                           height: 1.5,
                         ),
@@ -370,6 +382,7 @@ class _QueueDjPageState extends State<QueueDjPage>
                     onPressed: beginEvent,
                   ),
                   new Icon(beginIcon),
+                  // if user changes their mind and presses "no", go back to previous state
                   yesNoVisible
                       ? new RaisedButton(
                           shape: new RoundedRectangleBorder(
@@ -379,13 +392,14 @@ class _QueueDjPageState extends State<QueueDjPage>
                               text: "No",
                               style: TextStyle(
                                 fontSize: 15.0,
-                                color: Colors.black,
+                                color: Colors.white,
                                 letterSpacing: 1.0,
                                 height: 1.5,
                               ),
                             ),
                           ),
-                          color: Colors.red[900],
+                          splashColor: Colors.cyan,
+                          color: Colors.blueGrey,
                           padding: EdgeInsets.only(
                               left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                           onPressed: () => yesOrNo(false),

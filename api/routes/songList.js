@@ -22,31 +22,41 @@ var Song = connection.define('songtest', {
 
 /*Handles finding all songs under a DJ's ID and then returns them as a JSON file 
 Uses POST instead of GET because it can take parameters in a much more effeceint fashion
-@params JSON dj_id
-@returns JSON on true
-@returns 0 on false
+@params Int dj_id
+@returns Array of JSONs
 */
 router.post ('/event', (req, res, next) => {
     if(parseInt(req.body.dj_id) > 0){
         Song.findAll({where: {dj_id: parseInt(req.body.dj_id)}})
         .then( list => {
-            res.status(200).json({
-                //message: "Here is the Song list",
+            res.status(200).json({                
                 listing: list
             })
-            
+            return list;
         })
     } else {
         res.status(404).json({
             message: "No list exist for this ID"
         })
-        return 0;
+        
     }
 });
 
+/*Sends a Response to the server containing the song from the app.
+@params String Artist
+@params String Title
+@returns JSON
+ */
+router.post ('/queue', (req, res, next) => {
+    res.status(200).json({
+        Artist: req.body.Artist,
+        Title: req.body.Title
+    })
+});
 /*Handles inserting songs into the DB via POST
 Has the songs passed one at a time so it can parse the dj_id
-@params JSON title: artist: dj_id:
+@params String title: 
+@params Int artist: dj_id:
 @returns HTTP status
 */
 router.post ('/', (req, res, next) => {   
@@ -55,20 +65,53 @@ router.post ('/', (req, res, next) => {
         force: false
     })
     .then(() => {
+        var Array = req.body;
+        Array.forEach(myFunction);
+
+        function myFunction (value, index, array) {
         Song.create({
+            Artist: value.Artist,
+            Title: value.Title,
+            dj_id: parseInt(value.dj_id),
+            loweredArtist: value.Artist.toLowerCase(),
+            loweredTitle: value.Title.toLowerCase(),    
+        })
+    
+
+    //res.status(201).json({
+    //    artist: value.Artist,
+     //   title: value.Title
+    //});
+}
+res.status(200).json({
+    message: "Songs uploaded"
+});
+}) 
+});
+
+/*Deletes a spng from the database according to title, artist, and dj_id
+@params String Artist
+@params String Title
+@params Int dj_id
+@returns HTTP response
+ */
+router.delete ('/', (req, res, next) => {
+    connection.sync ({
+        force: false
+    })
+    .then(() => {
+        Song.destroy({
             Artist: req.body.Artist,
             Title: req.body.Title,
-            dj_id: parseInt(req.body.dj_id),
-            loweredArtist: req.body.Artist.toLowerCase(),
-            loweredTitle: req.body.Title.toLowerCase()        
+            dj_id: parseInt(req.body.dj_id) 
         })
     })
 
     res.status(201).json({
+        message: "This song was deleted",
         artist: req.body.Artist,
         title: req.body.Title
     });
-    
 });
 
 module.exports = router;

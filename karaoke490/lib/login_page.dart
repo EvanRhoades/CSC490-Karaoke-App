@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'create_account_page.dart';
 import 'join_or_create.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,6 +36,10 @@ class _LoginPageState extends State<LoginPage> {
     final snackbar = new SnackBar(
       content: new Text("Validating..."),
     );
+    final snackbar2 = new SnackBar(
+      content: new Text("Login Failed"),
+    );
+
     scaffoldKey.currentState.showSnackBar(snackbar);
 
     /* SEAN: INSERT CODE HERE
@@ -45,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
            can just return the username once you finish the validation.
        variables: _email, _password, _validated */
     var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
-    http.post(url, body: {"email":_emailC,"password":_passwordC).then((response){
+    http.post(url, body: {"email":_email,"password":_password}).then((response){
       print("Response from attempting to log in");
       print("Response status: ${response.statusCode}");
       print("Response body: ${response.body}");
@@ -53,20 +59,23 @@ class _LoginPageState extends State<LoginPage> {
         {
           _validated = true;
         }
-        //as soon as response body is corrected edit this so that DJ_id is checked and then edit globals.isDJ
-        //String parseBody = $response.body;
-        //parseBody.indexOf("dj_id")+8
+        //  as soon as response body is corrected edit this so that DJ_id is checked and then edit globals.isDJ
+        //  String parseBody = $response.body;
+        //  parseBody.indexOf("dj_id")+8
 
     });
+    
+//     DELETE IN THE FUTURE
+//     (the following line of code is for my own testing purposes)
+//    _validated = true; commented out by Sean
+    _validated = true;
 
-
-
-    // DELETE IN THE FUTURE
-    // (the following line of code is for my own testing purposes)
-    //_validated = true; commented out by Sean
-
+    // if account is legit, go to the next page
     if (_validated)
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
+    // if login is unsuccessful, tell the user
+    else
+      scaffoldKey.currentState.showSnackBar(snackbar2);
   }
 
   // what happens when the user clicks "Create Account"
@@ -80,11 +89,14 @@ class _LoginPageState extends State<LoginPage> {
     return new Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: new Text("Login"),
       ),
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.white,
+      // contains login form, login button, and create account button
       body: new ListView(children: <Widget>[
+        // text containing app name
         new Container(
           alignment: Alignment.center,
           child: new RichText(
@@ -92,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
               text: 'Happy Funtime Karaoke',
               style: TextStyle(
                 fontSize: 25.0,
-                color: Colors.red[900],
+                color: Colors.cyan,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 3.0,
                 height: 4.0,
@@ -100,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        // login form & button
         new Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
@@ -128,17 +141,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   new RaisedButton(
                     child: new Text("Login"),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     onPressed: _submit,
                   )
                 ],
               )),
         ),
+        // create account button
         new Container(
             alignment: Alignment.center,
             child: new RaisedButton(
               child: new Text("Create Account"),
-              color: Colors.red[900],
+              color: Colors.cyan,
               onPressed: _gotoCreate,
             )),
       ]),

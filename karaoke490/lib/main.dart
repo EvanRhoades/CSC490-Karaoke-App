@@ -10,9 +10,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      theme: new ThemeData(
-        primarySwatch: Colors.amber,
-      ),
       home: new LoginPage(),
     );
   }

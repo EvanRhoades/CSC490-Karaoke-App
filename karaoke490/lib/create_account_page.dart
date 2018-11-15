@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class CreatePage extends StatefulWidget {
   @override
@@ -58,10 +60,12 @@ class _CreatePageState extends State<CreatePage> {
     return new Scaffold(
       key: scaffoldKey2,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: new Text("Create Account"),
       ),
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.white,
+      // widget that contains pretty much everything on this page
       body: new ListView(children: <Widget>[
         new Container(
           alignment: Alignment.center,
@@ -70,7 +74,7 @@ class _CreatePageState extends State<CreatePage> {
               text: 'Happy Funtime Karaoke',
               style: TextStyle(
                 fontSize: 25.0,
-                color: Colors.red[900],
+                color: Colors.cyan,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 3.0,
                 height: 4.0,
@@ -90,6 +94,7 @@ class _CreatePageState extends State<CreatePage> {
               child: new Column(
                 children: <Widget>[
                   new TextFormField(
+                    style: TextStyle(color: Colors.black),
                     decoration: new InputDecoration(labelText: "Email"),
                     // validates email input; val = user input
                     validator: (val) =>
@@ -107,6 +112,7 @@ class _CreatePageState extends State<CreatePage> {
                     onSaved: (val) => _fName = val,
                   ),
                   new TextFormField(
+
                     decoration: new InputDecoration(labelText: "Last Name"),
                     // validates email input; val = user input
                     validator: (val) => val.length < 2
@@ -123,7 +129,6 @@ class _CreatePageState extends State<CreatePage> {
                         : null,
                     // assigns user input to appropriate variable
                     onSaved: (val) => _usernameC = val,
-
                   ),
                   new TextFormField(
                     decoration: new InputDecoration(labelText: "Password"),
@@ -147,7 +152,7 @@ class _CreatePageState extends State<CreatePage> {
                   ),
                   new RaisedButton(
                     child: new Text("Create Account"),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     onPressed: _doThis,
                   )
                 ],

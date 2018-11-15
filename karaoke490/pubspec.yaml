@@ -14,7 +14,7 @@ environment:
 
 dependencies:
   #http dependency for communication with database
-  http: ^0.12.0
+  http: ^0.11.3
   flutter:
     sdk: flutter
 

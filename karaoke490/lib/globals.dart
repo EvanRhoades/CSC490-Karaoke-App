@@ -5,7 +5,6 @@ library my_prj.globals;
 // is this user a DJ?  This info will come from the server/database immediately after login
 bool isDJ = true;
 
-
 // this will store the DJ's songlist for the duration of the user's involvement in the event
 // NOTE: indexes must align (index 0 for song should match index 0 for artist
 //                           ...there may be a way to do this a different way on my end but this was the most simple)

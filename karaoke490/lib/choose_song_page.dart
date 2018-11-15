@@ -24,13 +24,14 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
 
   // indicates whether to display search results or entire list
   bool searching = false;
-  Color backColor = Colors.green[200];
 
+  // these variables exist to adjust the visual display of the logout button when pressed
+  Color backColor = Colors.white;
   bool yesNoVisible = false;
-  IconData beginIcon = Icons.audiotrack;
+  IconData beginIcon = Icons.close;
   bool userLeaving = false;
   String leaveButtonText = "Leave Event";
-  Color beginColor = Colors.red[900];
+  Color beginColor = Colors.black;
 
   void leaveEvent() {
     // If participant wants to leave...
@@ -38,14 +39,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
       userLeaving = true;
       backColor = Colors.white;
       leaveButtonText = "Are you sure?";
-      beginColor = Colors.white;
       beginIcon = Icons.warning;
       yesNoVisible = true;
       setState(() {});
     }
   }
 
-  // if dj is trying to finish event, display "Yes" and "no" buttons
+  // if participant is trying to finish event, display "Yes" and "no" buttons
   void yesOrNo(bool yesNo) {
     // if yes, exit event
     if (yesNo) {
@@ -55,15 +55,16 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     // if no, go back to previous state
     else {
       userLeaving = false;
-      backColor = Colors.green[200];
+      backColor = Colors.white;
       leaveButtonText = "Leave Event";
-      beginColor = Colors.red[900];
-      beginIcon = Icons.audiotrack;
+      beginIcon = Icons.close;
       yesNoVisible = false;
       setState(() {});
     }
   }
 
+  // when user presses "logout", this method is used to help facilitate the button changes
+  // for transitioning to "are you sure?"
   Row exitButton() {
     return new Row(mainAxisAlignment: MainAxisAlignment.center, children: <
         Widget>[
@@ -76,20 +77,22 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   text: "Yes",
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     letterSpacing: 1.0,
                     height: 1.5,
                   ),
                 ),
               ),
-              color: Colors.green[900],
+              color: Colors.blueGrey,
+              splashColor: Colors.cyan,
               padding:
                   EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
+              // if they press this button ("yes"), continue with leave event process
               onPressed: () => yesOrNo(true),
             )
           : new Text(""),
       new Icon(beginIcon),
-      // begins the event
+      // this "button" really just displays "are you sure?"
       new RaisedButton(
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
@@ -98,7 +101,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
             text: leaveButtonText,
             style: TextStyle(
               fontSize: 15.0,
-              color: Colors.black,
+              color: Colors.white,
               letterSpacing: 1.0,
               height: 1.5,
             ),
@@ -109,6 +112,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
         onPressed: leaveEvent,
       ),
       new Icon(beginIcon),
+      // if user changes their mind and presses "no", go back to previous state
       yesNoVisible
           ? new RaisedButton(
               shape: new RoundedRectangleBorder(
@@ -118,13 +122,14 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   text: "No",
                   style: TextStyle(
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Colors.white,
                     letterSpacing: 1.0,
                     height: 1.5,
                   ),
                 ),
               ),
-              color: Colors.red[900],
+              splashColor: Colors.cyan,
+              color: Colors.blueGrey,
               padding:
                   EdgeInsets.only(left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
               onPressed: () => yesOrNo(false),
@@ -135,17 +140,18 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
 
   // when displaying the list to the user, checks whether or not it will be the search results or regular list
   ListView listOfSongs() {
+    // helps wrap the text if the song is too long
     double cWidth = MediaQuery.of(context).size.width * 0.8;
     if (!searching) {
+      // the scrollable list DJ's songlist
       return new ListView.builder(
-        // the scrollable list of songs
         itemCount: globals.djSonglist.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
-            shape: Border(bottom: BorderSide(color: Colors.red[900])),
+            shape: Border(bottom: BorderSide(color: Colors.cyan)),
             child: new Container(
               width: cWidth,
-              color: Colors.green[200],
+              color: Colors.white12,
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -182,6 +188,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   new Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                   ),
+                  // selects this particular song and user then enters the queue
                   new RaisedButton(
                     child: new RichText(
                       text: new TextSpan(
@@ -194,7 +201,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                         ),
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                     onPressed: () => selectMe(index),
@@ -206,18 +213,19 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
         },
       );
     } else if (searching) {
+      // the scrollable list of searched songs
       return new ListView.builder(
-        // the scrollable list of songs
         itemCount: globals.userSearchSongs.length,
         itemBuilder: (BuildContext context, int index) {
           return new Card(
-            shape: Border(bottom: BorderSide(color: Colors.red[900])),
+            shape: Border(bottom: BorderSide(color: Colors.cyan)),
             child: new Container(
               width: cWidth,
-              color: Colors.green[200],
+              color: Colors.white,
               child: new Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  // displays song title
                   Expanded(
                     child: new RichText(
                       text: new TextSpan(
@@ -235,6 +243,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   new Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                   ),
+                  // displays song artist
                   Expanded(
                     child: new RichText(
                       text: new TextSpan(
@@ -251,6 +260,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                   new Padding(
                     padding: const EdgeInsets.only(left: 5.0),
                   ),
+                  // selects this particular song and user then enters the queue
                   new RaisedButton(
                     child: new RichText(
                       text: new TextSpan(
@@ -263,7 +273,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                         ),
                       ),
                     ),
-                    color: Colors.amber,
+                    color: Colors.cyan,
                     padding: EdgeInsets.only(
                         left: 4.0, right: 4.0, bottom: 6.0, top: 2.0),
                     onPressed: () => selectMe(globals.djIndex[index]),
@@ -277,6 +287,8 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     }
   }
 
+  // These were put into variables because they will change when the user begins
+  // a search
   Widget appBarTitle = new Text("Select a song");
   Icon actionIcon = new Icon(Icons.search);
 
@@ -285,6 +297,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
     // to help with text wrapping if the song title is too long
     return new Scaffold(
         appBar: AppBar(
+            backgroundColor: Colors.black,
             centerTitle: true,
             title: appBarTitle,
             automaticallyImplyLeading: false,
@@ -299,13 +312,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
                       this.actionIcon = new Icon(Icons.close);
                       this.appBarTitle = new TextField(
                         style: new TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         decoration: new InputDecoration(
                             prefixIcon:
-                                new Icon(Icons.search, color: Colors.black),
+                                new Icon(Icons.search, color: Colors.white),
                             hintText: "Enter Search Here",
-                            hintStyle: new TextStyle(color: Colors.black26)),
+                            hintStyle: new TextStyle(color: Colors.white30)),
                         maxLength: 12,
                         onSubmitted: (String findMe) {
                           print(findMe);
@@ -335,6 +348,7 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
               ),
             ]),
         backgroundColor: backColor,
+        // displays list of songs and exit button
         body: new Column(
           children: <Widget>[
             new Expanded(child: listOfSongs()),
