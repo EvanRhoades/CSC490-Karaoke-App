@@ -103,19 +103,9 @@ router.post ('/dj', (req, res, next) => {
             password: hash
             //dj_id: parseInt(req.body.dj_id ),                
         })
-        
+        res.status(201)
     })
-
-    User.findOne({where: {email: req.body.email}})
-    .then( userDj => {
-        res.status(201).json({
-            message: "Your DJ ID is:",
-            ident: userDj.dj_id
-        })
-    })
-    
-
-
+ 
 });
 
 module.exports = router;
