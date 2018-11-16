@@ -72,7 +72,7 @@ router.post ('/', (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: hash,
-            dj_id: parseInt(req.body.dj_id ),
+            dj_id: 0
                 
         })
     })
@@ -83,5 +83,39 @@ router.post ('/', (req, res, next) => {
 
 });
 
+/*Creates a DJ with an auto-incremented ID that is returned
+ */
+router.post ('/dj', (req, res, next) => {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+    var i = 0;
+    var random = Math.floor((Math.random() * 10000) + 100);
+
+    connection.sync({
+        force: false
+    })
+    .then(() => {        
+        User.create({
+            email: req.body.email,
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            password: hash
+            //dj_id: parseInt(req.body.dj_id ),                
+        })
+        
+    })
+
+    User.findOne({where: {email: req.body.email}})
+    .then( userDj => {
+        res.status(201).json({
+            message: "Your DJ ID is:",
+            ident: userDj.dj_id
+        })
+    })
+    
+
+
+});
 
 module.exports = router;

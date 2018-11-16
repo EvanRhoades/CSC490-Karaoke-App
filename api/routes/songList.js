@@ -89,7 +89,7 @@ res.status(200).json({
 }) 
 });
 
-/*Deletes a spng from the database according to title, artist, and dj_id
+/*Deletes a song from the database according to title, artist, and dj_id
 @params String Artist
 @params String Title
 @params Int dj_id
