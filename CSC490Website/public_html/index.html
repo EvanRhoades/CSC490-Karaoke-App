@@ -11,18 +11,23 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             .body{
-                background: #79ce99;
+                background: #f4f4f4;
             }
             .header {
                 padding: 50px;
                 text-align: center;
-                background: #a0ffc3;
-                color: red;
+                background: #ffffff;
+                color: #4ef9fc;
                 font-size: 30px;
+                text-shadow:
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;
             }            
             .navbar {
                 overflow: hidden; 
-                background-color: #ffed28;
+                background-color: #3cbfe0;
             }
             .navbar a{
                 float: left; 
@@ -40,12 +45,16 @@ and open the template in the editor.
                 background-color: #ddd; 
                 color: black; 
             }
-            
+
         </style>
     </head>
     <body class = "body">
-        <div class ="header">           
-           <h1>Happy Funtime Karaoke</h1>
+    <script>
+        sessionStorage.setItem("dj_id", 1);
+        sessionStorage.setItem("username", null);
+    </script>
+        <div class ="header">   
+            <h1>Happy Funtime Karaoke</h1>
         </div>
         <div class ="navbar">
             <a href="Index.html">Main</a>
@@ -53,7 +62,23 @@ and open the template in the editor.
             <a href="Login.html">Login</a>
             <a href="JoinEvent.html">Join Event</a>
             <a href="UploadSongs.html">Upload Songs</a>
+            <a onclick="checkDJ()">Create Event</a>
             <a href="#" class="right">About</a>
         </div>
+        <script>
+        function checkDJ(){
+            var x = sessionStorage.getItem("dj_id");
+            alert(x);
+            if(x == "-1"){
+            window.location.href="Login.html";
+            }
+            if(x == "0"){
+            }
+            if(x != "-1" && x != "0"){ 
+            window.location.href="ManageEvent.html";           
+            }
+        }
+    </script>
     </body>
+    
 </html>

@@ -11,11 +11,11 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
             .body{
-                background: #79ce99;
+                background: #f4f4f4;
             }            
             .navbar {
                 overflow: hidden; 
-                background-color: #ffed28;
+                background-color: #3cbfe0;
             }
             .navbar a{
                 float: left; 
@@ -40,6 +40,7 @@ and open the template in the editor.
             .pcenter{
                 text-align: center;
                 line-height: 100px;
+                font-size: 30px;
             }
             .queue{
                 width: 100%;
@@ -66,7 +67,7 @@ and open the template in the editor.
             </script>
             <div class="w3-container w3-cell" style="width:45%" >
                 <p class="pcenter">There Are: </p>
-                <p class="pcenter" id="counter">0</p>
+                <p class="pcenter" id="counter"></p>
                 <p class="pcenter">Singers In The Queue.</p>
 
             </div>
@@ -74,39 +75,50 @@ and open the template in the editor.
             <div class="w3-container w3-cell">
                 <p>Singers Queue</p>
                 <select id="queue" class="queue" size="10" name="singers">
+                    <option>Kayson Murillo - Happier: Marshmello</option>
+                    <option>Tyra Stewart - Mr. Brightside: The Killers</option>
                 </select> 
 
-                <button type="button" onclick="myFunction()">Insert option</button>
+
                 <br>
-  <button onclick="listboxMove('lst', 'up');">Move Up</button>
-  <button onclick="listboxMove('lst', 'down');">Move Down</button>
-  
-    <script>
-    function listboxMove(listID, direction) {
-      var listbox = document.getElementById("queue");
-      var selIndex = listbox.selectedIndex;
-      if (-1 == selIndex) {
-        alert("Please select an option to move.");
-        return;
-      }
-      var increment = -1;
-      if (direction == 'up')
-        increment = -1;
-      else
-        increment = 1;
-      if ((selIndex + increment) < 0 ||
-        (selIndex + increment) > (listbox.options.length - 1)) {
-        return;
-      }
-      var selValue = listbox.options[selIndex].value;
-      var selText = listbox.options[selIndex].text;
-      listbox.options[selIndex].value = listbox.options[selIndex + increment].value
-      listbox.options[selIndex].text = listbox.options[selIndex + increment].text
-      listbox.options[selIndex + increment].value = selValue;
-      listbox.options[selIndex + increment].text = selText;
-      listbox.selectedIndex = selIndex + increment;
-    }
-  </script>
+                <button type="button" onclick="myFunction()">Refresh Queue</button>
+                <button onclick="listboxMove('lst', 'up');">Move Up</button>
+                <button onclick="listboxMove('lst', 'down');">Move Down</button>
+                <button type="button" onclick="removeFirst()">Next Singer</button>
+                <button>End Event</button>
+
+                <script>
+                    function removeFirst(){
+                        var listbox = document.getElementById("queue");
+                        listbox.remove(0);
+                        var y = document.getElementById("queue").length;
+                        document.getElementById("counter").innerHTML = y;
+                    }
+                    function listboxMove(listID, direction) {
+                        var listbox = document.getElementById("queue");
+                        var selIndex = listbox.selectedIndex;
+                        if (-1 == selIndex) {
+                            alert("Please select an option to move.");
+                            return;
+                        }
+                        var increment = -1;
+                        if (direction == 'up')
+                            increment = -1;
+                        else
+                            increment = 1;
+                        if ((selIndex + increment) < 0 ||
+                                (selIndex + increment) > (listbox.options.length - 1)) {
+                            return;
+                        }
+                        var selValue = listbox.options[selIndex].value;
+                        var selText = listbox.options[selIndex].text;
+                        listbox.options[selIndex].value = listbox.options[selIndex + increment].value
+                        listbox.options[selIndex].text = listbox.options[selIndex + increment].text
+                        listbox.options[selIndex + increment].value = selValue;
+                        listbox.options[selIndex + increment].text = selText;
+                        listbox.selectedIndex = selIndex + increment;
+                    }
+                </script>
 
                 <script>
                     function myFunction() {
@@ -114,12 +126,14 @@ and open the template in the editor.
                         var z = 0;
                         z = z + 1;
                         var option = document.createElement("option");
-                        option.text = "Kiwi" + z;
+                        option.text = "Leanne Taylor - Dance Dance: Fall Out Boy";
                         x.add(option);
                         var y = document.getElementById("queue").length;
                         document.getElementById("counter").innerHTML = y;
                     }
                 </script>
+                <script>var y = document.getElementById("queue").length;
+                        document.getElementById("counter").innerHTML = y;</script>
             </div>
         </div>
     </body>
