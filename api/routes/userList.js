@@ -32,16 +32,13 @@ router.post ('/login', (req, res, next) => {
     
     if (User.findOne({where: {email: req.body.email}})){
         User.findOne({where: {email: req.body.email}})
-        .then ( user => {
-            if (bcrypt.compare(req.body.password, user.password)){                
-                res.status(200).json({
-                    //message: "Login Successful",
-                    djId: user.dj_id                
-                })
+        .then ( (err,user) => {
+            if (bcrypt.compare(req.body.password, user.password === false)){                
+                next(err);
             } else {                
-                res.status(500).json({
-                    message: "Invalid Password"                                      
-                })               
+                res.status(200).json({
+                    djId: user.dj_id                
+                 })             
             }
         })
     } else {        
@@ -72,7 +69,7 @@ router.post ('/', (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: hash,
-            dj_id: 0
+            //dj_id: 0
                 
         })
     })
@@ -83,13 +80,31 @@ router.post ('/', (req, res, next) => {
 
 });
 
-/*Creates a DJ with an auto-incremented ID that is returned
+/*GET rout to send the greates DJ ID to web page so that it can send an incremented dj ID for new DJ
+ */
+router.get ('/max', (req, res, next) => {
+
+    connection.sync({
+        force: false
+    })
+    .then(() =>{
+        User.max('dj_id')
+        .then( max => {
+            res.status(200).json({
+                message: max
+            })
+        })
+    })
+
+})
+
+/*Creates a DJ
  */
 router.post ('/dj', (req, res, next) => {
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(req.body.password, salt);
-    var i = 0;
-    var random = Math.floor((Math.random() * 10000) + 100);
+    
+    User.max('dj_id')
 
     connection.sync({
         force: false
@@ -100,8 +115,8 @@ router.post ('/dj', (req, res, next) => {
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            password: hash
-            //dj_id: parseInt(req.body.dj_id ),                
+            password: hash,
+            dj_id: parseInt(req.body.dj_id ),                
         })
         res.status(201)
     })
