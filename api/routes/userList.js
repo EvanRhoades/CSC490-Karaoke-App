@@ -72,7 +72,7 @@ router.post ('/', (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: hash,
-            dj_id: parseInt(req.body.dj_id ),
+            //dj_id: 0
                 
         })
     })
@@ -83,5 +83,47 @@ router.post ('/', (req, res, next) => {
 
 });
 
+/*GET rout to send the greates DJ ID to web page so that it can send an incremented dj ID for new
+ */
+router.get ('/max', (req, res, next) => {
+
+    connection.sync({
+        force: false
+    })
+    .then(() =>{
+        User.max('dj_id')
+        .then( max => {
+            res.status(200).json({
+                message: max
+            })
+        })
+    })
+
+})
+
+/*Creates a DJ with an auto-incremented ID that is returned
+ */
+router.post ('/dj', (req, res, next) => {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+    
+    User.max('dj_id')
+
+    connection.sync({
+        force: false
+    })
+    .then(() => {        
+        User.create({
+            email: req.body.email,
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            password: hash,
+            dj_id: parseInt(req.body.dj_id ),                
+        })
+        res.status(201)
+    })
+ 
+});
 
 module.exports = router;
