@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'create_account_page.dart';
 import 'join_or_create.dart';
+import 'globals.dart' as globals;
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
@@ -19,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   String _email;
   String _password;
   bool _validated = false;
+  bool _response = false;
 
   // what happens when the user clicks "Login"
   void _submit() {
@@ -50,27 +52,32 @@ class _LoginPageState extends State<LoginPage> {
            Point being, I will need a way to access their username, so maybe you
            can just return the username once you finish the validation.
        variables: _email, _password, _validated */
-    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
-    http.post(url, body: {"email":_email,"password":_password}).then((response){
-      print("Response from attempting to log in");
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-      if(response.body != 0)
-        {
-          _validated = true;
-        }
-        //  as soon as response body is corrected edit this so that DJ_id is checked and then edit globals.isDJ
-        //  String parseBody = $response.body;
-        //  parseBody.indexOf("dj_id")+8
+    //Future<String>
 
-    });
-    
+
 //     DELETE IN THE FUTURE
 //     (the following line of code is for my own testing purposes)
 //    _validated = true; commented out by Sean
-    _validated = true;
-
+    //_validated = true;
+    int i = 0;
+    while(_response == false)
+      {
+        i++;
+      }
+    /*while(_response == false && i < 100)
+      {
+        i++;
+        // this loop is here because the program does not seem to wait for the response before it executes the code after it
+        // meaning you could log in correctly and it would set _validated to true but not before it checks the if statement below it
+      }
+      if(i == 29)
+        {
+          print("no response from server");
+        }
+      print(_validated);
+    */
     // if account is legit, go to the next page
+
     if (_validated)
       Navigator.push(context, new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
     // if login is unsuccessful, tell the user
@@ -158,4 +165,32 @@ class _LoginPageState extends State<LoginPage> {
       ]),
     );
   }
+
+  Future<String> logIn() async
+  {
+    print(_email);
+    print(_password);
+    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
+    http.post(url, body: {"email":_email,"password":_password}).then((response){
+      _response = true;
+      print("Response from attempting to log in");
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if(response.statusCode == 200)
+      {
+        _validated = true;
+      }
+      // this monster line cuts off all the things besides the dj ID that is returned from the response's body
+      globals.djID = int.parse(response.body.substring(response.body.indexOf("djId: ")+9,response.body.indexOf("djId: ")+9+response.body.substring(response.body.indexOf("djId: ")+9).indexOf("}")));
+      //set isDJ to true if the ID is something other than 0 because that means they are a dj for that ID
+      if(globals.djID != 0)
+      {
+        globals.isDJ = true;
+      }
+    });
+    print(_validated);
+    
+  }
 }
+
