@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _response = false;
 
   // what happens when the user clicks "Login"
-  void _submit() {
+  void _submit() async{
     // first we grab the formKey as it currently stands
     final form = formKey.currentState;
 
@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
   // if we are good to go, we try to use the user input to login
-  void performLogin() {
+  Future<void> performLogin(){
     final snackbar = new SnackBar(
       content: new Text("Validating..."),
     );
@@ -43,7 +43,10 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     scaffoldKey.currentState.showSnackBar(snackbar);
-
+    //_validated = await logIn();
+    //logIn();
+    //await logIn;
+    //print("passed logIn");
     /* SEAN: INSERT CODE HERE
        Two things:
         1. if the validation is successful, change _validated to true
@@ -54,13 +57,14 @@ class _LoginPageState extends State<LoginPage> {
        variables: _email, _password, _validated */
     //Future<String>
 
+      //await logIn();
 
 //     DELETE IN THE FUTURE
 //     (the following line of code is for my own testing purposes)
 //    _validated = true; commented out by Sean
     //_validated = true;
-    int i = 0;
-    while(_response == false)
+    //int i = 0;
+    /*while(_response == false)
       {
         i++;
       }
@@ -76,14 +80,50 @@ class _LoginPageState extends State<LoginPage> {
         }
       print(_validated);
     */
-    // if account is legit, go to the next page
 
-    if (_validated)
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
-    // if login is unsuccessful, tell the user
-    else
-      scaffoldKey.currentState.showSnackBar(snackbar2);
+    // if account is legit, go to the next page
+*/  //bool tempVal = logIn();
+    //bool tempVal = await logIn();
+    //_validated = await logIn();
+    //await 1+1;
+
+    print("start");
+    print(_email);
+    print(_password);
+    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
+    http.post(url, body: {"email":_email,"password":_password}).then((response){
+
+      print("Response from attempting to log in");
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+
+      if(response.statusCode == 200)
+      {
+        Future.delayed(Duration(seconds:5), () => true);
+        _validated = true;
+        print("do we even get here??");
+      }
+      else
+      {
+        print('test fail');
+      }
+      // this monster line cuts off all the things besides the dj ID that is returned from the response's body
+      globals.djID = int.parse(response.body.substring(response.body.indexOf("djId: ")+9,response.body.indexOf("djId: ")+9+response.body.substring(response.body.indexOf("djId: ")+9).indexOf("}")));
+      //set isDJ to true if the ID is something other than 0 because that means they are a dj for that ID
+      if(globals.djID != 0)
+      {
+        globals.isDJ = true;
+      }
+      if (_validated)
+        Navigator.push(context, new MaterialPageRoute(
+            builder: (context) => new JoinOrCreatePage()));
+      // if login is unsuccessful, tell the user
+      else
+        scaffoldKey.currentState.showSnackBar(snackbar2);
+    });
   }
+
+
 
   // what happens when the user clicks "Create Account"
   // (they are pushed over to the "Create Account" page)
@@ -164,33 +204,6 @@ class _LoginPageState extends State<LoginPage> {
             )),
       ]),
     );
-  }
-
-  Future<String> logIn() async
-  {
-    print(_email);
-    print(_password);
-    var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";
-    http.post(url, body: {"email":_email,"password":_password}).then((response){
-      _response = true;
-      print("Response from attempting to log in");
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-
-      if(response.statusCode == 200)
-      {
-        _validated = true;
-      }
-      // this monster line cuts off all the things besides the dj ID that is returned from the response's body
-      globals.djID = int.parse(response.body.substring(response.body.indexOf("djId: ")+9,response.body.indexOf("djId: ")+9+response.body.substring(response.body.indexOf("djId: ")+9).indexOf("}")));
-      //set isDJ to true if the ID is something other than 0 because that means they are a dj for that ID
-      if(globals.djID != 0)
-      {
-        globals.isDJ = true;
-      }
-    });
-    print(_validated);
-    
   }
 }
 
