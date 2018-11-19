@@ -32,13 +32,16 @@ router.post ('/login', (req, res, next) => {
     
     if (User.findOne({where: {email: req.body.email}})){
         User.findOne({where: {email: req.body.email}})
-        .then ( (err,user) => {
-            if (bcrypt.compare(req.body.password, user.password === false)){                
-                next(err);
-            } else {                
+        .then ( user => {
+            if (bcrypt.compare(req.body.password, user.password)){                
                 res.status(200).json({
+                    //message: "Login Successful",
                     djId: user.dj_id                
-                 })             
+                })
+            } else {                
+                res.status(500).json({
+                    message: "Invalid Password"                                      
+                })               
             }
         })
     } else {        
@@ -80,7 +83,7 @@ router.post ('/', (req, res, next) => {
 
 });
 
-/*GET rout to send the greates DJ ID to web page so that it can send an incremented dj ID for new DJ
+/*GET rout to send the greates DJ ID to web page so that it can send an incremented dj ID for new
  */
 router.get ('/max', (req, res, next) => {
 
@@ -98,7 +101,7 @@ router.get ('/max', (req, res, next) => {
 
 })
 
-/*Creates a DJ
+/*Creates a DJ with an auto-incremented ID that is returned
  */
 router.post ('/dj', (req, res, next) => {
     var salt = bcrypt.genSaltSync(10);
