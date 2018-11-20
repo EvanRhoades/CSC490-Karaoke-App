@@ -42,8 +42,25 @@ and open the template in the editor.
             <a href="Login.html">Login</a>
             <a href="JoinEvent.html">Join Event</a>
             <a href="UploadSongs.html">Upload Songs</a>
+            <a onclick="checkDJ()">Create Event</a>
             <a href="#" class="right">About</a>
         </div>
+        <script>
+            function checkDJ() {
+                var x = sessionStorage.getItem("dj_id");
+
+                if (x == "-1") {
+                    alert("You are not logged in");
+                    window.location.href = "Login.html";
+                }
+                if (x == "0") {
+                    alert("You are not a DJ");
+                }
+                if (x != "-1" && x != "0") {
+                    window.location.href = "ManageEvent.html";
+                }
+            }
+        </script>
         <div>
             <center>
                 <h3>Join Event</h3>

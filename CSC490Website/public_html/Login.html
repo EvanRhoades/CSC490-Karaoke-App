@@ -66,16 +66,16 @@
 
             <table>
                 <tr>
-                    <td>Username:</td>
+                    <td>Email:</td>
                     <td>
-                        <input type="text" name="user" required>
+                        <input type="text" name="email" required>
                     </td>
                 </tr>
 
                 <tr>
                     <td>Password:</td>
                     <td>
-                        <input type="password" name="user_pass" required>
+                        <input type="password" name="pass" required>
                     </td>
                 </tr>
 
@@ -84,11 +84,11 @@
                         <script>
                             $(document).ready(function () {
                                 $("button").click(function () {
-                                    username = document.getElementById("user");
+                                    email = document.getElementById("email");
                                     password = document.getElementById("pass");
                                     $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/login",
                                             {
-                                                username: username,
+                                                email: email,
                                                 password: password,
                                             });
                                 });
