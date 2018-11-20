@@ -68,11 +68,13 @@ and open the template in the editor.
         <script>
         function checkDJ(){
             var x = sessionStorage.getItem("dj_id");
-            alert(x);
+            
             if(x == "-1"){
+                alert("You are not logged in");
             window.location.href="Login.html";
             }
             if(x == "0"){
+                alert("You are not a DJ");
             }
             if(x != "-1" && x != "0"){ 
             window.location.href="ManageEvent.html";           
