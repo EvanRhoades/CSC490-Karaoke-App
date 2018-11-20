@@ -9,9 +9,11 @@ class ChooseSongPage extends StatefulWidget {
 }
 
 class _ChooseSongPageState extends State<ChooseSongPage> {
+
   // this will be called when the user presses the select button
   void selectMe(int index) {
     globals.selectedSongIndex = index;
+    //globals.participantList.add()
     // SEAN: We now have the selected song from the user.  This should be sent back to the server
     // so that it can go in the Queue for the event/DJ.
     // Variable: index (index of both the song and the artist arrays)

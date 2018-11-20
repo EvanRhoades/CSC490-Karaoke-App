@@ -34,9 +34,12 @@ class _JoinOrCreatePageState extends State<JoinOrCreatePage> {
     // 1. check if this event code exists
 
 
+
     // if the input is syntactically valid, we save it and move to the next page
     if (form.validate() && eventCodeExists) {
       form.save();
+
+
 
       /*
          SEAN:
