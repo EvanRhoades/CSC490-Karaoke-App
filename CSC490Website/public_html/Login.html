@@ -59,11 +59,7 @@
             }
         </script>
     <center>
-
         <h3>Login</h3>
-
-        <form action ="login" method="post">
-
             <table>
                 <tr>
                     <td>Email:</td>
@@ -84,12 +80,12 @@
                         <script>
                             $(document).ready(function () {
                                 $("button").click(function () {
-                                    email = document.getElementById("email");
-                                    password = document.getElementById("pass");
+                                    var email = document.getElementById("email").value;
+                                    var password = document.getElementById("pass").value;
                                     $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/login",
                                             {
                                                 email: email,
-                                                password: password,
+                                                password: password
                                             });
                                 });
                             });
@@ -101,7 +97,6 @@
                     </td>
                 </tr>                    
             </table>                
-        </form>
     </center>    
 </body>
 </html>
