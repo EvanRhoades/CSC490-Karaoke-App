@@ -48,6 +48,9 @@ and open the template in the editor.
             option{
                 font-size: 30px;
             }
+            .code{
+                font-size: 20px;
+            }
         </style>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     </head>
@@ -77,19 +80,24 @@ and open the template in the editor.
                 }
             }
         </script>
-        <div></div>
-        <div class="w3-cell-row">
+        <div class="code">
+            <p id="Eventcode"></p>
             <script>
-                var y = document.getElementById("queue").length;
-                document.getElementById("counter").innerHTML = y;
+                var x = Math.floor(Math.random() * 1000000);
+                var s = x+"";
+                while (s.length < 6) s = "0" + s;
+                document.getElementById("Eventcode").innerHTML = "Event Code: " + s;
+
+                    var y = document.getElementById("queue").length;
+                    document.getElementById("counter").innerHTML = y;
             </script>
+        </div>
+        <div class="w3-cell-row">
             <div class="w3-container w3-cell" style="width:45%" >
-                <p class="pcenter">There Are: </p>
+                <p class="pcenter">There Is/Are: </p>
                 <p class="pcenter" id="counter"></p>
-                <p class="pcenter">Singers In The Queue.</p>
-
+                <p class="pcenter">Singer(s) In The Queue.</p>
             </div>
-
             <div class="w3-container w3-cell">
                 <p>Singers Queue</p>
                 <select id="queue" class="queue" size="10" name="singers">
@@ -150,8 +158,10 @@ and open the template in the editor.
                         document.getElementById("counter").innerHTML = y;
                     }
                 </script>
-                <script>var y = document.getElementById("queue").length;
-                    document.getElementById("counter").innerHTML = y;</script>
+                <script>
+                    var y = document.getElementById("queue").length;
+                    document.getElementById("counter").innerHTML = y;
+                </script>
             </div>
         </div>
     </body>
