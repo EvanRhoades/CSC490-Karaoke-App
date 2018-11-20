@@ -31,7 +31,7 @@
             }            
         </style>
     </head>
-    
+
     <body class="body">
         <div class ="navbar">
             <a href="Index.html">Main</a>
@@ -39,52 +39,69 @@
             <a href="Login.html">Login</a>
             <a href="JoinEvent.html">Join Event</a>
             <a href="UploadSongs.html">Upload Songs</a>
+            <a onclick="checkDJ()">Create Event</a>
             <a href="#" class="right">About</a>
         </div>
-        <center>
+        <script>
+            function checkDJ() {
+                var x = sessionStorage.getItem("dj_id");
 
-            <h3>Login</h3>
-            
-            <form action ="login" method="post">
-                
-                <table>
-                    <tr>
-                        <td>Username:</td>
-                        <td>
-                            <input type="text" name="user" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>Password:</td>
-                        <td>
-                            <input type="password" name="user_pass" required>
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                            <script>
+                if (x == "-1") {
+                    alert("You are not logged in");
+                    window.location.href = "Login.html";
+                }
+                if (x == "0") {
+                    alert("You are not a DJ");
+                }
+                if (x != "-1" && x != "0") {
+                    window.location.href = "ManageEvent.html";
+                }
+            }
+        </script>
+    <center>
+
+        <h3>Login</h3>
+
+        <form action ="login" method="post">
+
+            <table>
+                <tr>
+                    <td>Username:</td>
+                    <td>
+                        <input type="text" name="user" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Password:</td>
+                    <td>
+                        <input type="password" name="user_pass" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <script>
                             $(document).ready(function () {
-                                $("button").click(function () {                                    
-                                    username = document.getElementById("user");                                  
+                                $("button").click(function () {
+                                    username = document.getElementById("user");
                                     password = document.getElementById("pass");
-                                        $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/login",
-                                                {    
-                                                    username: username,                                                    
-                                                    password: password,                                                   
-                                                });                                    
+                                    $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/login",
+                                            {
+                                                username: username,
+                                                password: password,
+                                            });
                                 });
                             });
                         </script>
                         <button>Login</button>
-                        </td>
-                        <td>
-                            Not yet a member? <a href="CreateAccount.html">Create Account</a>
-                        </td>
-                    </tr>                    
-                </table>                
-            </form>
-        </center>    
-    </body>
+                    </td>
+                    <td>
+                        Not yet a member? <a href="CreateAccount.html">Create Account</a>
+                    </td>
+                </tr>                    
+            </table>                
+        </form>
+    </center>    
+</body>
 </html>

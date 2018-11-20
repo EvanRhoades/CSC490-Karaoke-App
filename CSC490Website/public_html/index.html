@@ -49,10 +49,10 @@ and open the template in the editor.
         </style>
     </head>
     <body class = "body">
-    <script>
-        sessionStorage.setItem("dj_id", 1);
-        sessionStorage.setItem("username", null);
-    </script>
+        <script>
+            sessionStorage.setItem("dj_id", 1);
+            sessionStorage.setItem("username", null);
+        </script>
         <div class ="header">   
             <h1>Happy Funtime Karaoke</h1>
         </div>
@@ -66,21 +66,21 @@ and open the template in the editor.
             <a href="#" class="right">About</a>
         </div>
         <script>
-        function checkDJ(){
-            var x = sessionStorage.getItem("dj_id");
-            
-            if(x == "-1"){
-                alert("You are not logged in");
-            window.location.href="Login.html";
+            function checkDJ() {
+                var x = sessionStorage.getItem("dj_id");
+
+                if (x == "-1") {
+                    alert("You are not logged in");
+                    window.location.href = "Login.html";
+                }
+                if (x == "0") {
+                    alert("You are not a DJ");
+                }
+                if (x != "-1" && x != "0") {
+                    window.location.href = "ManageEvent.html";
+                }
             }
-            if(x == "0"){
-                alert("You are not a DJ");
-            }
-            if(x != "-1" && x != "0"){ 
-            window.location.href="ManageEvent.html";           
-            }
-        }
-    </script>
+        </script>
     </body>
-    
+
 </html>

@@ -43,7 +43,7 @@ and open the template in the editor.
                 Papa.parse(x, {header: true});
             }
         </script>
-        <script>    
+        <script>
             function showDiv() {
                 var x = document.getElementById('csvFileInput');
                 sessionStorage.setItem('file', x);
@@ -65,29 +65,46 @@ and open the template in the editor.
             <a href="Login.html">Login</a>
             <a href="JoinEvent.html">Join Event</a>
             <a href="UploadSongs.html">Upload Songs</a>
+            <a onclick="checkDJ()">Create Event</a>
             <a href="#" class="right">About</a>
         </div>
+        <script>
+            function checkDJ() {
+                var x = sessionStorage.getItem("dj_id");
+
+                if (x == "-1") {
+                    alert("You are not logged in");
+                    window.location.href = "Login.html";
+                }
+                if (x == "0") {
+                    alert("You are not a DJ");
+                }
+                if (x != "-1" && x != "0") {
+                    window.location.href = "ManageEvent.html";
+                }
+            }
+        </script>
         <input type="button" value="Upload Songlist" onclick="showDiv()" />
         <div id="upload"  style="display:none" >
             <input type="file" id="csvFileInput" onchange="handleFiles(this.files)" accept=".csv">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script>
-                $(document).ready(function(){
-                    $("button").click(function(){
+                $(document).ready(function () {
+                    $("button").click(function () {
                         $.post("http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/songList",
-                        {
-                          Artist: "Weird Al",
-                          Title: "A New Duck",
-                          dj_id: "99"
-                        },
-                        function(data,status){
-                            alert("Data: " + data + "\nStatus: " + status);
+                                {
+                                    Artist: "Weird Al",
+                                    Title: "A New Duck",
+                                    dj_id: "99"
+                                },
+                                function (data, status) {
+                                    alert("Data: " + data + "\nStatus: " + status);
 
-                        });
+                                });
                     });
                 });
-                </script>
-                <button>Upload</button>
+            </script>
+            <button>Upload</button>
         </div>
         <div id="notDJ" style="display:none" >
             Not a DJ
@@ -96,7 +113,7 @@ and open the template in the editor.
             Not logged in
         </div>
         <div id="output">
-    </div>
+        </div>
         <script type="text/javascript" src="read-csv.js"></script>
     </body>
 </html>
