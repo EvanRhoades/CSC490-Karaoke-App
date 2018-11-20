@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'login_page.dart';
 
 class CreatePage extends StatefulWidget {
   @override
@@ -11,6 +12,9 @@ class CreatePage extends StatefulWidget {
 class _CreatePageState extends State<CreatePage> {
   final scaffoldKey2 = new GlobalKey<ScaffoldState>();
   final formKey2 = new GlobalKey<FormState>();
+  final snackbar2 = new SnackBar(
+    content: new Text("Account Creation Failed"),
+  );
 
   // stores user input for email and password; underscore means private
   String _emailC;
@@ -47,11 +51,13 @@ class _CreatePageState extends State<CreatePage> {
       if(response.statusCode == 201)
       {
         // enter command to return to log in screen here
-
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => new LoginPage()));
       }
+      // tell user that account creation has failed
       else
       {
-
+        scaffoldKey2.currentState.showSnackBar(snackbar2);
       }
     });
   }
