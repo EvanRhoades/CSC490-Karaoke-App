@@ -136,22 +136,22 @@
                 if (checked) {
                     $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/dj",
                             {
-                                email: email,
-                                username: username,
-                                firstname: fname,
-                                lastname: lname,
-                                password: password,
-                                dj_id: 1
+                                "email" : email,
+                                "username" : username,
+                                "firstname" : fname,
+                                "lastname" : lname,
+                                "password" : password,
+                                "dj_id" : 1
                             });
                 } else {
                     $.post("karaokeinstance.czurquwpnxuq.us-east-1.rds.amazonaws.com:3306/",
                             {
-                                email: email,
-                                username: username,
-                                firstname: fname,
-                                lastname: lname,
-                                password: password,
-                                dj_id: 0
+                                "email" : email,
+                                "username" : username,
+                                "firstname" : fname,
+                                "lastname" : lname,
+                                "password" : password,
+                                "dj_id" : 0
                             });
                 }
             }
