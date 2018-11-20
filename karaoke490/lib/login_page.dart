@@ -88,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
     //await 1+1;
 
     print("start");
+    globals.userUserName = _email;
     print(_email);
     print(_password);
     var url = "http://ec2-18-206-245-108.compute-1.amazonaws.com:3000/userList/login";

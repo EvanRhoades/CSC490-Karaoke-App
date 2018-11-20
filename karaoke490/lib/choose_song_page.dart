@@ -13,13 +13,13 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
   // this will be called when the user presses the select button
   void selectMe(int index) {
     globals.selectedSongIndex = index;
-    //globals.participantList.add()
+    globals.participantList.add(globals.userUserName);
+    globals.participantSongs.add(globals.djSonglist[index]);
     // SEAN: We now have the selected song from the user.  This should be sent back to the server
     // so that it can go in the Queue for the event/DJ.
     // Variable: index (index of both the song and the artist arrays)
     // Song Array: globals.djSonglist
     // Artist Array: globals.djArtistlist
-
     Navigator.push(context,
         new MaterialPageRoute(builder: (context) => new QueueInfoPage()));
   }
@@ -51,6 +51,8 @@ class _ChooseSongPageState extends State<ChooseSongPage> {
   void yesOrNo(bool yesNo) {
     // if yes, exit event
     if (yesNo) {
+      globals.participantList.removeLast();
+      globals.participantSongs.removeLast();
       Navigator.push(context,
           new MaterialPageRoute(builder: (context) => new JoinOrCreatePage()));
     }
