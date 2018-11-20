@@ -87,8 +87,6 @@ and open the template in the editor.
                 var s = x+"";
                 while (s.length < 6) s = "0" + s;
                 document.getElementById("Eventcode").innerHTML = "Event Code: " + s;
-                var y = document.getElementById("queue").length;
-                document.getElementById("counter").innerHTML = y;
             </script>
         </div>
         <div class="w3-cell-row">
@@ -142,12 +140,8 @@ and open the template in the editor.
                         listbox.options[selIndex + increment].text = selText;
                         listbox.selectedIndex = selIndex + increment;
                     }
-                </script>
-                <script>
                     function myFunction() {
                         var x = document.getElementById("queue");
-                        var z = 0;
-                        z = z + 1;
                         var option = document.createElement("option");
                         option.text = "Leanne Taylor - Dance Dance: Fall Out Boy";
                         x.add(option);

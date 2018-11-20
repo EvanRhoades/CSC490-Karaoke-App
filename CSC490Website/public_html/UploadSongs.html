@@ -47,14 +47,14 @@ and open the template in the editor.
             function showDiv() {
                 var x = document.getElementById('csvFileInput');
                 sessionStorage.setItem('file', x);
-                var id = 1; //for now id is hard coded but in future will check the id of who is logged in to see if they are a dj
-                if (id >= 1) {
+                var id = sessionStorage.getItem("dj_id");
+                if (x != "-1" && x != "0") {
                     document.getElementById('upload').style.display = "block";
                 }
-                if (id == 0) {
+                if (id == "0") {
                     document.getElementById('notDJ').style.display = "block";
                 }
-                if (id == null) {
+                if (id == "-1") {
                     document.getElementById('notLoggedIn').style.display = "block";
                 }
             }
